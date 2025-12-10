@@ -1,9 +1,13 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import Loading from "./components/common/Loading";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import ConverterDetail from "./pages/ConverterDetail";
 import NotFoundPage from "./pages/NotFoundPage";
-import ErrorBoundary from "./components/common/ErrorBoundary";
+
+// Lazy load the heaviest page
+const ConverterDetail = lazy(() => import("./pages/ConverterDetail"));
 
 export const router = createBrowserRouter([
   {
@@ -21,13 +25,17 @@ export const router = createBrowserRouter([
       },
       {
         path: "converter/:id",
-        element: <ConverterDetail />,
+        element: (
+          <Suspense fallback={<div className="p-8 flex justify-center"><Loading /></div>}>
+            <ConverterDetail />
+          </Suspense>
+        ),
       },
 
     ],
   },
 
- 
+
   {
     path: "*",
     element: <NotFoundPage />,

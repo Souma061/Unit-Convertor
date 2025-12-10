@@ -1,8 +1,14 @@
-import { useParams } from "react-router-dom";
+
+import { useState } from "react";
+import { Helmet } from "react-helmet-async"; // Import Helmet
+import { FiArrowLeft } from "react-icons/fi";
+import { Link, useParams } from "react-router-dom";
 import NotFound from "../components/common/NotFound";
 import ConverterUI from "../components/converters/ConverterUI";
+import RecentConversions from "../components/converters/RecentConversions";
 import { getConverterById } from "../data/converters";
 import { useCurrencyRates } from "../hooks/useCurrencyRates";
+import { useRecentConversions } from "../hooks/useRecentConversions";
 
 export default function ConverterDetail() {
   const { id } = useParams();
@@ -11,52 +17,84 @@ export default function ConverterDetail() {
   const currencyRates = useCurrencyRates();
   const finalRates = id === "currency" ? currencyRates : { rates: null, loading: false, error: null };
 
+  const { recents, addRecent, clearRecents } = useRecentConversions(id);
+  const [restoreData, setRestoreData] = useState(null);
+
   if (!converter) {
     return <NotFound message={`Converter "${id}" not found`} />;
   }
 
   return (
     <div className="space-y-8 md:space-y-12 lg:space-y-14">
-      {/* Hero Section */}
-      <div className="space-y-4 md:space-y-6">
-        <div className="flex flex-col xs:flex-row items-start gap-4 sm:gap-6">
-          <span className="text-4xl xs:text-5xl sm:text-6xl shrink-0">{converter.icon}</span>
-          <div className="flex-1 min-w-0">
-            <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-              {converter.category}
-            </span>
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-2">
-              {converter.name} Converter
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm sm:text-base">{converter.description}</p>
+      <Helmet>
+        <title>{converter.name} Converter - UnitMaster</title>
+        <meta name="description" content={converter.description} />
+      </Helmet>
+
+      {/* Back Button */}
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors group"
+      >
+        <FiArrowLeft className="text-lg group-hover:-translate-x-1 transition-transform" />
+        Back to Converters
+      </Link>
+
+      {/* Split Layout: Hero Left, Converter Right on Desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-start">
+        {/* Info Column */}
+        <div className="md:col-span-5 space-y-6 md:sticky md:top-24">
+          <div className="space-y-4">
+            <span className="text-5xl md:text-6xl inline-block">{converter.icon}</span>
+            <div>
+              <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                {converter.category}
+              </span>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-2 leading-tight">
+                {converter.name}
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-3 text-base md:text-lg leading-relaxed">
+                {converter.description}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {["Bidirectional", "Auto-precision", converter.id === "currency" ? "Live rates" : "Copy-safe"].map(
+              (pill) => (
+                <span
+                  key={pill}
+                  className="px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-medium text-gray-600 dark:text-gray-400"
+                >
+                  {pill}
+                </span>
+              )
+            )}
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 sm:gap-3">
-          {["Bidirectional", "Auto-precision", converter.id === "currency" ? "Live rates" : "Copy-safe"].map(
-            (pill) => (
-              <span
-                key={pill}
-                className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium whitespace-nowrap"
-              >
-                {pill}
-              </span>
-            )
-          )}
+        {/* Converter Column */}
+        <div className="md:col-span-7 w-full space-y-6">
+          <ConverterUI
+            converterData={converter}
+            rates={finalRates.rates}
+            ratesLoading={finalRates.loading}
+            ratesError={finalRates.error}
+            onConversionComplete={addRecent}
+            restoreData={restoreData}
+          />
+
+          <RecentConversions
+            recents={recents}
+            onClear={clearRecents}
+            onRestore={setRestoreData}
+          />
         </div>
       </div>
 
-      {/* Converter UI */}
-      <ConverterUI
-        converterData={converter}
-        rates={finalRates.rates}
-        ratesLoading={finalRates.loading}
-        ratesError={finalRates.error}
-      />
-
-      {/* Available Units */}
-      <div className="space-y-4 md:space-y-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Available Units</h2>
+      {/* Available Units (Full Width Below) */}
+      <div className="space-y-6 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Available Units</h2>
 
         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
           {converter.units.map((unit) => (

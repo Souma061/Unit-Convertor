@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { MdSwapVert } from "react-icons/md";
 import { useConverter } from "../../hooks/useConverter";
-import Loading from "../common/Loading";
+import Skeleton from "../common/Skeleton";
 import ConverterInput from "./ConverterInput";
 
 export default function ConverterUI({
@@ -8,6 +9,8 @@ export default function ConverterUI({
   rates = null,
   ratesLoading = false,
   ratesError = null,
+  onConversionComplete = null,
+  restoreData = null,
 }) {
   const {
     fromValue,
@@ -20,11 +23,25 @@ export default function ConverterUI({
     handleFromUnitChange,
     handleToUnitChange,
     handleSwapUnits,
+    setFromValue,
+    setToValue,
+    setFromUnit,
+    setToUnit,
   } = useConverter(
     converterData.id,
     converterData.defaultFromUnit,
     converterData.defaultToUnit
   );
+
+  // Restore previous conversion
+  useEffect(() => {
+    if (restoreData) {
+      setFromUnit(restoreData.fromUnit);
+      setToUnit(restoreData.toUnit);
+      setFromValue(restoreData.fromVal);
+      setToValue(restoreData.toVal);
+    }
+  }, [restoreData, setFromUnit, setToUnit, setFromValue, setToValue]);
 
   const handleFromChange = (value) => {
     handleFromValueChange(value, rates);
@@ -46,59 +63,118 @@ export default function ConverterUI({
     handleSwapUnits();
   };
 
+  // Skeleton Loading State for initial load
+  if (converterData.id === "currency" && ratesLoading && !rates) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto space-y-6">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
+          <Skeleton className="w-full h-20" />
+          <Skeleton className="h-10 w-10 rounded-full md:mt-5 shrink-0" />
+          <Skeleton className="w-full h-20" />
+        </div>
+        <Skeleton className="w-full h-12" />
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 xs:p-6 sm:p-8 shadow-md">
-      {ratesLoading && <Loading />}
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto">
+      {/* Show small loading indicator if re-fetching but we have stale data */}
+      {ratesLoading && rates && (
+        <div className="absolute top-2 right-2">
+          <div className="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+        </div>
+      )}
 
       {ratesError && !rates && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-3 xs:p-4 mb-4 xs:mb-6 text-red-800 dark:text-red-300 text-xs xs:text-sm">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-3 xs:p-3 mb-4 text-red-800 dark:text-red-300 text-xs xs:text-sm">
           {ratesError}
         </div>
       )}
 
       {converterData.id === "currency" && rates && !ratesError && (
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-lg p-2.5 xs:p-3 mb-4 xs:mb-6 text-green-800 dark:text-green-300 text-xs xs:text-sm">
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-lg p-2 xs:p-2 mb-4 text-green-800 dark:text-green-300 text-xs xs:text-sm">
           Currency rates updated
         </div>
       )}
 
-      <div className="space-y-5 xs:space-y-6">
-        <ConverterInput
-          value={fromValue}
-          onValueChange={handleFromChange}
-          unit={fromUnit}
-          onUnitChange={handleFromUnitSelect}
-          units={converterData.units}
-          label="From"
-          isLoading={ratesLoading}
-        />
+      {/* Main Converter Layout: Stacked on mobile, Side-by-side on tablet/desktop */}
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
 
-        <div className="flex justify-center py-1">
+        {/* FROM Section */}
+        <div className="flex-1 w-full space-y-1">
+          <ConverterInput
+            value={fromValue}
+            onValueChange={handleFromChange}
+            unit={fromUnit}
+            onUnitChange={handleFromUnitSelect}
+            units={converterData.units}
+            label="From"
+            isLoading={ratesLoading}
+          />
+        </div>
+
+        {/* Swap Button (Centered) */}
+        <div className="flex md:self-center shrink-0 pt-0 md:pt-6">
           <button
             onClick={handleSwap}
-            className="h-10 xs:h-12 w-10 xs:w-12 inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-full transition shadow-md cursor-pointer active:scale-95"
+            className="h-10 w-10 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full transition-all shadow-sm active:scale-95 border border-gray-200 dark:border-gray-500 cursor-pointer"
             title="Swap units"
           >
-            <MdSwapVert className="text-lg xs:text-xl" />
+            <MdSwapVert className="text-xl" />
           </button>
         </div>
 
-        <ConverterInput
-          value={toValue}
-          onValueChange={handleToChange}
-          unit={toUnit}
-          onUnitChange={handleToUnitSelect}
-          units={converterData.units}
-          label="To"
-          isLoading={ratesLoading}
-        />
-
-        {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-2.5 xs:p-3 text-red-800 dark:text-red-300 text-xs xs:text-sm">
-            {error}
-          </div>
-        )}
+        {/* TO Section */}
+        <div className="flex-1 w-full space-y-1">
+          <ConverterInput
+            value={toValue}
+            onValueChange={handleToChange}
+            unit={toUnit}
+            onUnitChange={handleToUnitSelect}
+            units={converterData.units}
+            label="To"
+            isLoading={ratesLoading}
+          />
+        </div>
       </div>
+
+      {/* Copy Result Button (Full width below) */}
+      <button
+        onClick={() => {
+          if (!toValue) return;
+          navigator.clipboard.writeText(toValue);
+
+          if (onConversionComplete) {
+            onConversionComplete({
+              fromVal: fromValue,
+              fromUnit,
+              toVal: toValue,
+              toUnit
+            });
+          }
+
+          const btn = document.getElementById("copy-btn");
+          if (btn) {
+            const originalText = btn.innerText;
+            btn.innerText = "Copied!";
+            setTimeout(() => {
+              btn.innerText = originalText;
+            }, 2000);
+          }
+        }}
+        id="copy-btn"
+        disabled={!toValue}
+        className="w-full mt-6 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer text-sm tracking-wide"
+      >
+        Copy Result
+      </button>
+
+      {error && (
+        <div className="mt-4 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-2 text-red-800 dark:text-red-300 text-xs text-center">
+          {error}
+        </div>
+      )}
     </div>
   );
 }

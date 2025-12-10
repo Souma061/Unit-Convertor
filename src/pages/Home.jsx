@@ -1,4 +1,8 @@
+
 import { useState } from "react";
+import { MdExplore } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import ConverterGrid from "../components/converters/ConverterGrid";
 import SearchBar from "../components/search/SearchBar";
 import { useSearch } from "../hooks/useSearch";
@@ -9,6 +13,10 @@ export default function Home() {
 
   return (
     <div className="space-y-10 md:space-y-14 lg:space-y-16">
+      <Helmet>
+        <title>UnitMaster - Precision Converter Suite</title>
+        <meta name="description" content="Fast and accurate unit converter for length, weight, currency, and more." />
+      </Helmet>
       {/* Hero Section */}
       <section className="space-y-6 md:space-y-8">
         <div className="space-y-3 md:space-y-4">

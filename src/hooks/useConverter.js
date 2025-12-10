@@ -1,22 +1,45 @@
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { getConverterById } from "../data/converters";
 import { convertValue } from "../utils/conversions";
 import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision";
 import { parseInputNumber } from "../utils/validation/inputValidator";
-import { getConverterById } from "../data/converters";
 
 export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
   const converter = getConverterById(converterId);
 
+  // Initialize from localStorage or use defaults
+  const [fromUnit, setFromUnit] = useState(() => {
+    const saved = localStorage.getItem(`converter_${converterId}_fromUnit`);
+    return saved || defaultFromUnit;
+  });
+  const [toUnit, setToUnit] = useState(() => {
+    const saved = localStorage.getItem(`converter_${converterId}_toUnit`);
+    return saved || defaultToUnit;
+  });
+
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
-  const [fromUnit, setFromUnit] = useState(defaultFromUnit);
-  const [toUnit, setToUnit] = useState(defaultToUnit);
   const [error, setError] = useState(null);
 
   const [precision, setPrecision] = useState(null);
   const [lastEdited, setLastEdited] = useState(null);
 
   const units = useMemo(() => converter?.units || [], [converter]);
+
+  // Save units to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(`converter_${converterId}_fromUnit`, fromUnit);
+    localStorage.setItem(`converter_${converterId}_toUnit`, toUnit);
+  }, [converterId, fromUnit, toUnit]);
+
+  useEffect(() => {
+    // Reset values when converter changes
+    setFromValue("");
+    setToValue("");
+    setError(null);
+    setPrecision(null);
+    setLastEdited(null);
+  }, [converterId]);
 
   const calculate = useCallback(
     (inputValue, inputUnit, outputUnit, rates) => {
@@ -134,5 +157,7 @@ export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
 
     setFromValue,
     setToValue,
+    setFromUnit,
+    setToUnit,
   };
 }

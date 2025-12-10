@@ -1,7 +1,7 @@
-import { useMemo } from "react";
 import Fuse from "fuse.js";
+import { useMemo } from "react";
+import { MIN_SEARCH_CHARS } from "../data/constants";
 import { CONVERTERS } from "../data/converters";
-import { FUSE_THRESHOLD, MIN_SEARCH_CHARS } from "../data/constants";
 
 export function useSearch(query = "") {
   const normalizedQuery = query.trim().toLowerCase();
@@ -10,19 +10,19 @@ export function useSearch(query = "") {
   const fuse = useMemo(() => {
     return new Fuse(CONVERTERS, {
       keys: [
-        { name: "name", weight: 0.4 },
-        { name: "description", weight: 0.2 },
-        { name: "searchableUnits", weight: 0.4 },
+        { name: "name", weight: 0.6 }, // Increased weight for Name
+        { name: "searchableUnits", weight: 0.3 }, // Units are secondary
+        { name: "description", weight: 0.1 }, // Description is less important
       ],
-      threshold: FUSE_THRESHOLD, // 0.3–0.4 recommended
+      threshold: 0.2, // Lower threshold = stricter matching (0.0 is exact match)
       ignoreLocation: true,
       includeScore: true,
-      minMatchCharLength: MIN_SEARCH_CHARS,
+      minMatchCharLength: 1, // Allow searching with 1 char
     });
   }, []);
 
   const searchResults = useMemo(() => {
-    if (normalizedQuery.length < MIN_SEARCH_CHARS) {
+    if (normalizedQuery.length < 1) {
       return CONVERTERS;
     }
 

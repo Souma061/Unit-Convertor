@@ -3,24 +3,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDark, setIsDark] = useState(true); // Default to dark theme
-
-  useEffect(() => {
-    // Check localStorage for saved preference
+  const [isDark, setIsDark] = useState(() => {
+    // Initialize from localStorage or system preference
     const saved = localStorage.getItem("theme");
-    if (saved) {
-      setIsDark(saved === "dark");
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDark(prefersDark);
+    if (saved !== null) {
+      return saved === "dark";
     }
-  }, []);
+    // Check system preference
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
   useEffect(() => {
-    // Save preference to localStorage
+    // Update localStorage and document class whenever isDark changes
     localStorage.setItem("theme", isDark ? "dark" : "light");
-    // Update document class for Tailwind dark mode
     if (isDark) {
       document.documentElement.classList.add("dark");
     } else {
@@ -29,7 +24,7 @@ export function ThemeProvider({ children }) {
   }, [isDark]);
 
   const toggleTheme = () => {
-    setIsDark(!isDark);
+    setIsDark((prev) => !prev);
   };
 
   return (

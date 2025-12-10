@@ -12,7 +12,7 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-linear-to-b from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen flex flex-col transition-colors duration-500 ease-in-out bg-linear-to-br from-slate-100 via-white to-slate-200 dark:from-slate-900 dark:via-gray-900 dark:to-slate-900">
       <Header />
 
       <main className="flex-1 w-full mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 max-w-6xl">

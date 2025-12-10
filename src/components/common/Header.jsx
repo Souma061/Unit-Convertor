@@ -8,41 +8,33 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/80 backdrop-blur-lg dark:border-gray-700 dark:bg-gray-900/80">
-      <nav className="max-w-6xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-3 sm:gap-4">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         <Link
           to="/"
           aria-label="Go to Home"
-          className="flex items-center gap-2 sm:gap-3 hover:opacity-80 active:scale-95 transition shrink-0"
+          className="flex items-center gap-2 hover:opacity-80 active:scale-95 transition-transform"
         >
-          <span className="inline-flex h-9 sm:h-10 w-9 sm:w-10 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-blue-600 text-white shadow-md dark:from-blue-600 dark:to-blue-700 flex-shrink-0">
-            <FiRefreshCw className="text-lg sm:text-xl font-bold" />
-          </span>
-          <div className="leading-tight hidden xs:block">
-            <div className="text-[10px] xs:text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">Precision Suite</div>
-            <h1 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white">
-              Unit Converter
-            </h1>
+          {/* Logo Icon */}
+          <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+            <FiRefreshCw className="text-lg font-bold" />
           </div>
+          {/* Brand Name */}
+          <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
+            UnitMaster
+          </span>
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
-          <div className="hidden md:flex items-center gap-2 sm:gap-3 text-xs text-gray-600 dark:text-gray-400">
-            {["Fast", "Accurate", "Live rates"].map((pill) => (
-              <span
-                key={pill}
-                className="px-3 py-1.5 rounded-full border border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-800"
-              >
-                {pill}
-              </span>
-            ))}
+        <div className="flex items-center gap-2 sm:gap-4">
+          <div className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+            {/* Pills can be removed or kept minimal if desired, keeping minimal based on screenshot */}
           </div>
 
           <button
             onClick={toggleTheme}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
+            className="p-2 sm:p-2.5 rounded-xl bg-gray-100/50 hover:bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:hover:bg-gray-800 dark:text-gray-300 transition-all hover:ring-2 ring-transparent ring-offset-2 ring-offset-white dark:ring-offset-gray-900 focus:outline-none focus:ring-blue-500 cursor-pointer"
           >
-            {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+            {isDark ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
           </button>
         </div>
       </nav>

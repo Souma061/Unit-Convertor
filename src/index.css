@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
@@ -68,10 +69,11 @@
   }
 
   /* Smooth transitions */
-  input,
-  select,
-  button {
-    transition: all 0.2s ease;
+  /* Global smooth transition for theme switching */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
   }
 
   /* Focus styles */
