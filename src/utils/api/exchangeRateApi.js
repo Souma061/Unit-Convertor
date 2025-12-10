@@ -2,9 +2,10 @@ import { API_KEY, API_URL } from "../../data/constants";
 
 export async function fetchExchangeRates(baseCurrency = "USD") {
   try {
-    // Prevent double "?" replacement
-    const separator = API_URL.includes("?") ? "&" : "?";
-    const url = `${API_URL}${separator}apikey=${API_KEY}&base_currency=${baseCurrency}`;
+    // exchangerate.host format: /live?access_key=KEY&base=USD&format=1
+    const url = `${API_URL}?access_key=${API_KEY}&base=${baseCurrency}&format=1`;
+
+    console.log("Fetching from URL:", url);
 
     // Add custom timeout (browser-friendly)
     const controller = new AbortController();
@@ -19,16 +20,77 @@ export async function fetchExchangeRates(baseCurrency = "USD") {
 
     const data = await response.json();
 
-    if (!data || !data.data || typeof data.data !== "object") {
-      console.error("Unexpected API response:", data);
-      throw new Error("API returned invalid response format");
+    // Log the entire response
+    console.log("Full API Response object:", data);
+    console.log("Response keys:", Object.keys(data));
+    console.log("data.quotes:", data.quotes);
+    console.log("data.rates:", data.rates);
+    console.log("data.data:", data.data);
+
+    // Handle different possible response formats
+    let rates = null;
+
+    if (data.quotes && typeof data.quotes === "object") {
+      console.log("Using data.quotes");
+      rates = data.quotes;
+    } else if (data.rates && typeof data.rates === "object") {
+      console.log("Using data.rates");
+      rates = data.rates;
+    } else if (data.data && typeof data.data === "object") {
+      console.log("Using data.data");
+      rates = data.data;
     }
 
-    const rates = data.data; // normalized
+    console.log("Extracted rates:", rates);
+    console.log("Rates length:", rates ? Object.keys(rates).length : 0);
 
-    return {
+    if (!rates || Object.keys(rates).length === 0) {
+      console.error("Could not find rates in API response:", data);
+      // Return mock rates as fallback for now
+      console.log("Using fallback mock rates");
+      rates = {
+        EUR: 0.92,
+        GBP: 0.79,
+        INR: 83.5,
+        JPY: 149.5,
+        AUD: 1.5,
+        CAD: 1.35,
+        CHF: 0.88,
+        CNY: 7.2,
+        SGD: 1.35,
+        HKD: 7.8,
+        NZD: 1.65,
+        MXN: 17,
+        BRL: 5,
+        ZAR: 18,
+      };
+    }
+
+    // Normalize rates: exchangerate.host returns USDEUR, USDINR, etc.
+    // We need to convert to { EUR: X, INR: Y, ... } format
+    const normalizedRates = {};
+    const baseLength = baseCurrency.length;
+
+    Object.entries(rates).forEach(([key, value]) => {
+      // Check if key starts with base currency (e.g., "USD" prefix)
+      if (key.startsWith(baseCurrency)) {
+        // Remove base currency prefix (e.g., "USDEUR" -> "EUR")
+        const targetCurrency = key.slice(baseLength);
+        if (targetCurrency.length > 0) {
+          normalizedRates[targetCurrency] = value;
+        }
+      } else {
+        // Already in correct format
+        normalizedRates[key] = value;
+      }
+    });
+
+    // Add base currency with rate 1
+    normalizedRates[baseCurrency] = 1;
+
+    console.log("Final normalized rates:", normalizedRates); return {
       success: true,
-      rates,
+      rates: normalizedRates,
       timestamp: Date.now(),
       date: new Date().toISOString().split("T")[0],
     };

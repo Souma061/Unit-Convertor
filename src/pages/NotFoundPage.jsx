@@ -1,11 +1,9 @@
-import React from 'react'
+import NotFound from "../components/common/NotFound";
 
-function NotFoundPage() {
+export default function NotFoundPage() {
   return (
-    <div>
-      
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <NotFound message="The page you're looking for doesn't exist." />
     </div>
-  )
+  );
 }
-
-export default NotFoundPage

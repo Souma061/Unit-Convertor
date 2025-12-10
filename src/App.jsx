@@ -1,23 +1,20 @@
-import Header from "./components/common/Header.jsx";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import ConverterDetail from "./pages/ConverterDetail.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./Router";
 
-function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+export default function App() {
   return (
-    <>
-      {/* <Header />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/converter/:id" element={<ConverterDetail />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
-      </Routes> */}
-
-
-      <div className="bg-amber-400">hi</div>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
-
-export default App;
