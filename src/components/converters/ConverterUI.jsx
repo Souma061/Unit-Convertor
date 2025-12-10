@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { MdSwapVert } from "react-icons/md";
+import { MdInfoOutline, MdSwapVert } from "react-icons/md"; // Added Info Icon
 import { useConverter } from "../../hooks/useConverter";
+import { getFormula } from "../../utils/conversions/formulaGenerator"; // Import
 import Skeleton from "../common/Skeleton";
 import ConverterInput from "./ConverterInput";
 
@@ -11,6 +12,7 @@ export default function ConverterUI({
   ratesError = null,
   onConversionComplete = null,
   restoreData = null,
+  onStateChange = null, // New prop to report state up
 }) {
   const {
     fromValue,
@@ -42,6 +44,13 @@ export default function ConverterUI({
       setToValue(restoreData.toVal);
     }
   }, [restoreData, setFromUnit, setToUnit, setFromValue, setToValue]);
+
+  // Report state changes to parent (for Reference Table)
+  useEffect(() => {
+    if (onStateChange) {
+      onStateChange({ fromValue, fromUnit });
+    }
+  }, [fromValue, fromUnit, onStateChange]);
 
   const handleFromChange = (value) => {
     handleFromValueChange(value, rates);
@@ -76,6 +85,9 @@ export default function ConverterUI({
       </div>
     );
   }
+
+  // Generate Formula
+  const formula = getFormula(fromUnit, toUnit, converterData.id, converterData.units);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto">
@@ -139,6 +151,17 @@ export default function ConverterUI({
         </div>
       </div>
 
+      {/* Formula Display - NEW */}
+      {formula && (
+        <div className="mt-4 flex items-start gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
+          <MdInfoOutline className="text-blue-500 text-base shrink-0 mt-0.5" />
+          <span>
+            <strong className="font-semibold text-gray-700 dark:text-gray-300">Formula: </strong>
+            {formula}
+          </span>
+        </div>
+      )}
+
       {/* Copy Result Button (Full width below) */}
       <button
         onClick={() => {
@@ -165,7 +188,7 @@ export default function ConverterUI({
         }}
         id="copy-btn"
         disabled={!toValue}
-        className="w-full mt-6 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer text-sm tracking-wide"
+        className="w-full mt-4 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer text-sm tracking-wide"
       >
         Copy Result
       </button>

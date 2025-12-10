@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import NotFound from "../components/common/NotFound";
 import ConverterUI from "../components/converters/ConverterUI";
 import RecentConversions from "../components/converters/RecentConversions";
+import ReferenceTable from "../components/converters/ReferenceTable"; // Import
 import { getConverterById } from "../data/converters";
 import { useCurrencyRates } from "../hooks/useCurrencyRates";
 import { useRecentConversions } from "../hooks/useRecentConversions";
@@ -19,6 +20,9 @@ export default function ConverterDetail() {
 
   const { recents, addRecent, clearRecents } = useRecentConversions(id);
   const [restoreData, setRestoreData] = useState(null);
+
+  // Track state for Reference Table
+  const [currentState, setCurrentState] = useState({ fromValue: "", fromUnit: "" });
 
   if (!converter) {
     return <NotFound message={`Converter "${id}" not found`} />;
@@ -82,12 +86,21 @@ export default function ConverterDetail() {
             ratesError={finalRates.error}
             onConversionComplete={addRecent}
             restoreData={restoreData}
+            onStateChange={setCurrentState} // Pass handler
           />
 
           <RecentConversions
             recents={recents}
             onClear={clearRecents}
             onRestore={setRestoreData}
+          />
+
+          <ReferenceTable
+            value={currentState.fromValue}
+            fromUnit={currentState.fromUnit}
+            units={converter.units}
+            converterId={converter.id}
+            rates={finalRates.rates}
           />
         </div>
       </div>

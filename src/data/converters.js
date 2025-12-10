@@ -1,13 +1,15 @@
-import { LENGTH_UNITS } from './units/lengthUnits';
-import { WEIGHT_UNITS } from './units/weightUnits';
-import { VOLUME_UNITS } from './units/volumeUnits';
-import { TEMPERATURE_UNITS } from './units/temperatureUnits';
-import { SPEED_UNITS } from './units/speedUnits';
-import { PRESSURE_UNITS } from './units/pressureUnits';
-import { ENERGY_UNITS } from './units/energyUnits';
 import { AREA_UNITS } from './units/areaUnits';
-import { TIME_UNITS } from './units/timeUnits';
+import { COOKING_UNITS } from './units/cookingUnits';
 import { CURRENCY_UNITS } from './units/currencyUnits';
+import { DATA_UNITS } from './units/dataUnits';
+import { ENERGY_UNITS } from './units/energyUnits';
+import { LENGTH_UNITS } from './units/lengthUnits';
+import { PRESSURE_UNITS } from './units/pressureUnits';
+import { SPEED_UNITS } from './units/speedUnits';
+import { TEMPERATURE_UNITS } from './units/temperatureUnits';
+import { TIME_UNITS } from './units/timeUnits';
+import { VOLUME_UNITS } from './units/volumeUnits';
+import { WEIGHT_UNITS } from './units/weightUnits';
 
 export const CONVERTERS = [
   {
@@ -16,8 +18,8 @@ export const CONVERTERS = [
     description: 'Convert between different units of length.',
     icon: '📏',
     category: 'Distance',
-    defaultFromUnit: 'm',      // FIXED
-    defaultToUnit: 'km',       // FIXED
+    defaultFromUnit: 'm',
+    defaultToUnit: 'km',
     units: LENGTH_UNITS,
     searchableUnits: LENGTH_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
@@ -44,8 +46,8 @@ export const CONVERTERS = [
     description: 'Convert between different units of volume.',
     icon: '🧴',
     category: 'Capacity',
-    defaultFromUnit: 'l',      // FIXED
-    defaultToUnit: 'gal',      // FIXED
+    defaultFromUnit: 'l',
+    defaultToUnit: 'gal',
     units: VOLUME_UNITS,
     searchableUnits: VOLUME_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
@@ -58,8 +60,8 @@ export const CONVERTERS = [
     description: 'Convert between different units of temperature.',
     icon: '🌡️',
     category: 'Thermodynamics',
-    defaultFromUnit: '°C',      // FIXED
-    defaultToUnit: '°F',        // FIXED
+    defaultFromUnit: '°C',
+    defaultToUnit: '°F',
     units: TEMPERATURE_UNITS,
     searchableUnits: TEMPERATURE_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
@@ -86,7 +88,7 @@ export const CONVERTERS = [
     description: 'Convert between different units of pressure.',
     icon: '🔧',
     category: 'Force',
-    defaultFromUnit: 'Pa',     // FIXED
+    defaultFromUnit: 'Pa',
     defaultToUnit: 'atm',
     units: PRESSURE_UNITS,
     searchableUnits: PRESSURE_UNITS.flatMap(unit => [
@@ -100,8 +102,8 @@ export const CONVERTERS = [
     description: 'Convert between different units of energy.',
     icon: '⚡',
     category: 'Power',
-    defaultFromUnit: 'J',       // FIXED
-    defaultToUnit: 'cal',       // FIXED
+    defaultFromUnit: 'J',
+    defaultToUnit: 'cal',
     units: ENERGY_UNITS,
     searchableUnits: ENERGY_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
@@ -114,7 +116,7 @@ export const CONVERTERS = [
     description: 'Convert between different units of area.',
     icon: '📐',
     category: 'Surface',
-    defaultFromUnit: 'm²',      // FIXED
+    defaultFromUnit: 'm²',
     defaultToUnit: 'acre',
     units: AREA_UNITS,
     searchableUnits: AREA_UNITS.flatMap(unit => [
@@ -128,10 +130,38 @@ export const CONVERTERS = [
     description: 'Convert between different units of time.',
     icon: '⏳',
     category: 'Duration',
-    defaultFromUnit: 's',        // FIXED
+    defaultFromUnit: 's',
     defaultToUnit: 'h',
     units: TIME_UNITS,
     searchableUnits: TIME_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
+  {
+    id: 'data',
+    name: 'Data Storage',
+    description: 'Convert between bits, bytes, and other digital units.',
+    icon: '💾',
+    category: 'Digital',
+    defaultFromUnit: 'MB',
+    defaultToUnit: 'GB',
+    units: DATA_UNITS,
+    searchableUnits: DATA_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
+  {
+    id: 'cooking',
+    name: 'Cooking',
+    description: 'Convert between kitchen measurements like cups and spoons.',
+    icon: '🍳',
+    category: 'Kitchen',
+    defaultFromUnit: 'cup',
+    defaultToUnit: 'ml',
+    units: COOKING_UNITS,
+    searchableUnits: COOKING_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
     ]),
   },
@@ -143,7 +173,7 @@ export const CONVERTERS = [
     icon: '💱',
     category: 'Finance',
     defaultFromUnit: 'USD',
-    defaultToUnit: 'INR',       // FIXED (NOT IND)
+    defaultToUnit: 'INR',
     units: CURRENCY_UNITS,
     searchableUnits: CURRENCY_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
