@@ -9,7 +9,6 @@ export default function ConverterUI({
   ratesLoading = false,
   ratesError = null,
 }) {
-
   const {
     fromValue,
     toValue,
@@ -27,7 +26,6 @@ export default function ConverterUI({
     converterData.defaultToUnit
   );
 
-  // ---- VALUE CHANGE HANDLERS ----
   const handleFromChange = (value) => {
     handleFromValueChange(value, rates);
   };
@@ -36,7 +34,6 @@ export default function ConverterUI({
     handleToValueChange(value, rates);
   };
 
-  // ---- UNIT CHANGE HANDLERS ----
   const handleFromUnitSelect = (unit) => {
     handleFromUnitChange(unit, rates);
   };
@@ -45,33 +42,27 @@ export default function ConverterUI({
     handleToUnitChange(unit, rates);
   };
 
-  // ---- SWAP BUTTON ----
   const handleSwap = () => {
     handleSwapUnits();
   };
 
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 sm:p-8">
-
-      {/* LOADING */}
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 xs:p-6 sm:p-8 shadow-md">
       {ratesLoading && <Loading />}
 
-      {/* ERROR STATE */}
       {ratesError && !rates && (
-        <div className="bg-red-900 border border-red-700 rounded-lg p-4 mb-6 text-red-100 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-3 xs:p-4 mb-4 xs:mb-6 text-red-800 dark:text-red-300 text-xs xs:text-sm">
           {ratesError}
         </div>
       )}
 
-      {/* SUCCESS MESSAGE (Currency Only) */}
       {converterData.id === "currency" && rates && !ratesError && (
-        <div className="bg-blue-900 border border-blue-700 rounded-lg p-3 mb-6 text-blue-100 text-sm">
-          Currency rates updated ✔
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-lg p-2.5 xs:p-3 mb-4 xs:mb-6 text-green-800 dark:text-green-300 text-xs xs:text-sm">
+          Currency rates updated
         </div>
       )}
 
-      <div className="space-y-4">
-        {/* ---- FROM INPUT ---- */}
+      <div className="space-y-5 xs:space-y-6">
         <ConverterInput
           value={fromValue}
           onValueChange={handleFromChange}
@@ -82,19 +73,16 @@ export default function ConverterUI({
           isLoading={ratesLoading}
         />
 
-        {/* ---- SWAP BUTTON ---- */}
-        <div className="flex justify-center">
+        <div className="flex justify-center py-1">
           <button
             onClick={handleSwap}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 transition
-                     hover:scale-110 active:scale-95 cursor-pointer"
+            className="h-10 xs:h-12 w-10 xs:w-12 inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-full transition shadow-md cursor-pointer active:scale-95"
             title="Swap units"
           >
-            <MdSwapVert className="text-xl" />
+            <MdSwapVert className="text-lg xs:text-xl" />
           </button>
         </div>
 
-        {/* ---- TO INPUT ---- */}
         <ConverterInput
           value={toValue}
           onValueChange={handleToChange}
@@ -105,9 +93,8 @@ export default function ConverterUI({
           isLoading={ratesLoading}
         />
 
-        {/* ---- OTHER ERRORS ---- */}
         {error && (
-          <div className="bg-red-900 border border-red-700 rounded-lg p-3 text-red-100 text-sm">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-2.5 xs:p-3 text-red-800 dark:text-red-300 text-xs xs:text-sm">
             {error}
           </div>
         )}

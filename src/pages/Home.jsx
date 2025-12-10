@@ -1,34 +1,54 @@
 import { useState } from "react";
-import { useSearch } from "../hooks/useSearch";
-import SearchBar from "../components/search/SearchBar";
 import ConverterGrid from "../components/converters/ConverterGrid";
+import SearchBar from "../components/search/SearchBar";
+import { useSearch } from "../hooks/useSearch";
 
 export default function Home() {
-  const [query, setQuery] = useState(""); // 🔥 central search state
+  const [query, setQuery] = useState("");
   const { results } = useSearch(query);
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-4">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-100">
-          Find the perfect converter for your needs
-        </h2>
-        <p className="text-gray-400">
-          Explore a wide range of unit converters to simplify your
-          calculations and conversions.
-        </p>
-      </div>
+    <div className="space-y-10 md:space-y-14 lg:space-y-16">
+      {/* Hero Section */}
+      <section className="space-y-6 md:space-y-8">
+        <div className="space-y-3 md:space-y-4">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
+            Convert units with speed and precision
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
+            Search instantly across 10+ converters. Live currency rates, intelligent unit swapping, and effortless workflows.
+          </p>
+        </div>
 
-      {/* 🔥 Pass query + updater to SearchBar */}
-      <SearchBar query={query} onQueryChange={setQuery} />
+        {/* Search Bar */}
+        <div className="w-full max-w-2xl">
+          <SearchBar query={query} onQueryChange={setQuery} />
+        </div>
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-300">
-          {query ? `Search Results (${results.length})` : "Popular Converters"}
-        </h3>
+        {/* Feature Pills */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+          {["Bidirectional", "Auto-precision", "Keyboard nav", "Live rates"].map((feature) => (
+            <div
+              key={feature}
+              className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-800 text-center truncate"
+            >
+              {feature}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Results Section */}
+      <section className="space-y-6 md:space-y-8">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            {query ? `Search Results (${results.length})` : "All Converters"}
+          </h2>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1.5 md:mt-2">Click any converter to get started</p>
+        </div>
 
         <ConverterGrid converters={results} />
-      </div>
+      </section>
     </div>
   );
 }

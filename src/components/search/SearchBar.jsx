@@ -14,9 +14,6 @@ export default function SearchBar({ query, onQueryChange }) {
   const inputRef = useRef(null);
   const containerRef = useRef(null);
 
-  // ------------------------------
-  // Close when clicking outside
-  // ------------------------------
   useEffect(() => {
     function handleClickOutside(e) {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -27,18 +24,12 @@ export default function SearchBar({ query, onQueryChange }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ------------------------------
-  // Input typing
-  // ------------------------------
   const handleSearch = (e) => {
     onQueryChange(e.target.value);
     setHighlightIndex(0);
     setIsOpen(true);
   };
 
-  // ------------------------------
-  // Converter selection (Enter/mouse)
-  // ------------------------------
   const handleSelectConverter = (converterId) => {
     onQueryChange("");
     setIsOpen(false);
@@ -50,13 +41,9 @@ export default function SearchBar({ query, onQueryChange }) {
     inputRef.current?.focus();
   };
 
-  // ------------------------------
-  // Keyboard Navigation Logic
-  // ------------------------------
   const handleKeyDown = (e) => {
     if (!isOpen || results.length === 0) return;
 
-    // Arrow Down
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setHighlightIndex((prev) =>
@@ -64,7 +51,6 @@ export default function SearchBar({ query, onQueryChange }) {
       );
     }
 
-    // Arrow Up
     if (e.key === "ArrowUp") {
       e.preventDefault();
       setHighlightIndex((prev) =>
@@ -72,13 +58,11 @@ export default function SearchBar({ query, onQueryChange }) {
       );
     }
 
-    // Enter key selects the highlighted item
     if (e.key === "Enter") {
       e.preventDefault();
       handleSelectConverter(results[highlightIndex].id);
     }
 
-    // Escape closes
     if (e.key === "Escape") {
       setIsOpen(false);
       inputRef.current.blur();
@@ -88,7 +72,7 @@ export default function SearchBar({ query, onQueryChange }) {
   return (
     <div ref={containerRef} className="relative w-full">
       <div className="relative">
-        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xl" />
 
         <input
           ref={inputRef}
@@ -97,15 +81,16 @@ export default function SearchBar({ query, onQueryChange }) {
           onChange={handleSearch}
           onKeyDown={handleKeyDown}
           onFocus={() => setIsOpen(true)}
-          placeholder="Search converters... (length, kg, °c)"
-          className="w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-lg pl-12 pr-10 py-3
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          placeholder="Search converters or units..."
+          className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg pl-12 pr-12 py-3
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500"
         />
 
         {query && (
           <button
             onClick={handleClear}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400 transition cursor-pointer"
           >
             <FiX className="text-xl" />
           </button>
@@ -116,7 +101,7 @@ export default function SearchBar({ query, onQueryChange }) {
         <SearchResults
           results={results}
           onSelectConverter={handleSelectConverter}
-          highlightIndex={highlightIndex}        // 🔥 NEW
+          highlightIndex={highlightIndex}
         />
       )}
     </div>
