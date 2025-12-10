@@ -1,7 +1,5 @@
 
 import { useState } from "react";
-import { MdExplore } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ConverterGrid from "../components/converters/ConverterGrid";
 import SearchBar from "../components/search/SearchBar";
@@ -24,7 +22,7 @@ export default function Home() {
             Convert units with speed and precision
           </h1>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
-            Search instantly across 10+ converters. Live currency rates, intelligent unit swapping, and effortless workflows.
+            Search instantly across 12+ professional converters including Data & Cooking. Experience live currency rates, smart formula explanations, automatic history tracking, and effortless precision workflows.
           </p>
         </div>
 
@@ -35,7 +33,7 @@ export default function Home() {
 
         {/* Feature Pills */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-          {["Bidirectional", "Auto-precision", "Keyboard nav", "Live rates"].map((feature) => (
+          {["Smart Formulas", "History Tracking", "Live Rates", "Auto-precision"].map((feature) => (
             <div
               key={feature}
               className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-800 text-center truncate"
