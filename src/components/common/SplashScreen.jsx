@@ -26,7 +26,7 @@ export default function SplashScreen({ onFinish }) {
       </div>
 
       <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight mb-2">
-        UnitMaster
+        Metriq
       </h1>
       <p className="text-gray-500 dark:text-gray-400 text-sm font-medium tracking-wide uppercase">
         Precision Converter

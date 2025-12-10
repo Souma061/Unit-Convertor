@@ -31,7 +31,7 @@ export default function ConverterDetail() {
   return (
     <div className="space-y-8 md:space-y-12 lg:space-y-14">
       <Helmet>
-        <title>{converter.name} Converter - UnitMaster</title>
+        <title>{converter.name} Converter - Metriq</title>
         <meta name="description" content={converter.description} />
       </Helmet>
 

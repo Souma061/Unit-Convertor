@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="space-y-10 md:space-y-14 lg:space-y-16">
       <Helmet>
-        <title>UnitMaster - Precision Converter Suite</title>
+        <title>Metriq - Precision Converter Suite</title>
         <meta name="description" content="Fast and accurate unit converter for length, weight, currency, and more." />
       </Helmet>
       {/* Hero Section */}
