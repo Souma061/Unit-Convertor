@@ -1,8 +1,8 @@
 import {
+  convertCurrency,
   convertLinear,
   convertTemperature,
-  convertCurrency,
   convertValue,
-} from './conversionEngine';
+} from './conversionEngine.js';
 
-export { convertValue, convertLinear, convertTemperature, convertCurrency };
+export { convertCurrency, convertLinear, convertTemperature, convertValue };

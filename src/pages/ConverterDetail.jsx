@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async"; // Import Helmet
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
-import NotFound from "../components/common/NotFound";
-import ConverterUI from "../components/converters/ConverterUI";
-import RecentConversions from "../components/converters/RecentConversions";
-import ReferenceTable from "../components/converters/ReferenceTable"; // Import
-import { getConverterById } from "../data/converters";
-import { useCurrencyRates } from "../hooks/useCurrencyRates";
-import { useRecentConversions } from "../hooks/useRecentConversions";
+import NotFound from "../components/common/NotFound.jsx";
+import ConverterUI from "../components/converters/ConverterUI.jsx";
+import RecentConversions from "../components/converters/RecentConversions.jsx";
+import ReferenceTable from "../components/converters/ReferenceTable.jsx"; // Import
+import { getConverterById } from "../data/converters.js";
+import { useCurrencyRates } from "../hooks/useCurrencyRates.js";
+import { useRecentConversions } from "../hooks/useRecentConversions.js";
 
 export default function ConverterDetail() {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 
 import { FiMoon, FiRefreshCw, FiSun } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext.jsx";
 
 export default function Header() {
   const { isDark, toggleTheme } = useTheme();

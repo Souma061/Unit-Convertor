@@ -1,4 +1,4 @@
-import { CACHE_DURATION } from "../../data/constants";
+import { CACHE_DURATION } from "../../data/constants.js";
 
 // --------------------------------------
 // Retrieve Cached Data

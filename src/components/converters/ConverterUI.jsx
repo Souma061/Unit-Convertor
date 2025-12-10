@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { MdInfoOutline, MdSwapVert } from "react-icons/md"; // Added Info Icon
-import { useConverter } from "../../hooks/useConverter";
-import { getFormula } from "../../utils/conversions/formulaGenerator"; // Import
-import Skeleton from "../common/Skeleton";
-import ConverterInput from "./ConverterInput";
+import { useConverter } from "../../hooks/useConverter.js";
+import { getFormula } from "../../utils/conversions/formulaGenerator.js"; // Import
+import Skeleton from "../common/Skeleton.jsx";
+import ConverterInput from "./ConverterInput.jsx";
 
 export default function ConverterUI({
   converterData,

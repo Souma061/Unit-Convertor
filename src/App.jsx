@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./Router";
-import SplashScreen from "./components/common/SplashScreen";
-import { ThemeProvider } from "./context/ThemeContext";
+import { router } from "./Router.jsx";
+import SplashScreen from "./components/common/SplashScreen.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {

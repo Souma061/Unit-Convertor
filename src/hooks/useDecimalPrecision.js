@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision";
+import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision.js";
 
 export function useDecimalPrecision() {
   const [precision, setPrecision] = useState(null);

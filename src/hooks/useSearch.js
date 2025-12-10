@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 import { useMemo } from "react";
-import { MIN_SEARCH_CHARS } from "../data/constants";
-import { CONVERTERS } from "../data/converters";
+import { MIN_SEARCH_CHARS } from "../data/constants.js";
+import { CONVERTERS } from "../data/converters.js";
 
 export function useSearch(query = "") {
   const normalizedQuery = query.trim().toLowerCase();

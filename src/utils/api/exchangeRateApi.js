@@ -1,4 +1,4 @@
-import { API_KEY, API_URL } from "../../data/constants";
+import { API_KEY, API_URL } from "../../data/constants.js";
 
 export async function fetchExchangeRates(baseCurrency = "USD") {
   try {

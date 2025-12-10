@@ -1,4 +1,4 @@
-import ConverterCard from "./ConverterCard";
+import ConverterCard from "./ConverterCard.jsx";
 
 export default function ConverterGrid({ converters }) {
   return (

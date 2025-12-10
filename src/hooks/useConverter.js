@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getConverterById } from "../data/converters";
-import { convertValue } from "../utils/conversions";
-import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision";
-import { parseInputNumber } from "../utils/validation/inputValidator";
+import { getConverterById } from "../data/converters.js";
+import { convertValue } from "../utils/conversions/index.js";
+import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision.js";
+import { parseInputNumber } from "../utils/validation/inputValidator.js";
 
 export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
   const converter = getConverterById(converterId);

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useSearch } from "../../hooks/useSearch";
-import SearchResults from "./SearchResults";
+import { useSearch } from "../../hooks/useSearch.js";
+import SearchResults from "./SearchResults.jsx";
 
 export default function SearchBar({ query, onQueryChange }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { DEFAULT_DECIMALS, MAX_DECIMALS } from "../../data/constants";
+import { DEFAULT_DECIMALS, MAX_DECIMALS } from "../../data/constants.js";
 
 export function detectPrecision(value) {
   if (value === "" || value === null || value === undefined) {

@@ -1,9 +1,9 @@
 
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import ConverterGrid from "../components/converters/ConverterGrid";
-import SearchBar from "../components/search/SearchBar";
-import { useSearch } from "../hooks/useSearch";
+import ConverterGrid from "../components/converters/ConverterGrid.jsx";
+import SearchBar from "../components/search/SearchBar.jsx";
+import { useSearch } from "../hooks/useSearch.js";
 
 export default function Home() {
   const [query, setQuery] = useState("");

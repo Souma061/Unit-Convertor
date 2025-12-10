@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchExchangeRates } from "../utils/api/exchangeRateApi";
-import { getCached, setCached, getOldCache } from "../utils/api/cache";
-import { CACHE_DURATION, CURRENCY_CACHE_KEY } from "../data/constants";
+import { useState } from "react";
+import { CACHE_DURATION, CURRENCY_CACHE_KEY } from "../data/constants.js";
+import { getCached, getOldCache, setCached } from "../utils/api/cache.js";
+import { fetchExchangeRates } from "../utils/api/exchangeRateApi.js";
 
 export function useCurrencyRates() {
   const [isUsingFallback, setIsUsingFallback] = useState(false);

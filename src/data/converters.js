@@ -1,15 +1,15 @@
-import { AREA_UNITS } from './units/areaUnits';
-import { COOKING_UNITS } from './units/cookingUnits';
-import { CURRENCY_UNITS } from './units/currencyUnits';
-import { DATA_UNITS } from './units/dataUnits';
-import { ENERGY_UNITS } from './units/energyUnits';
-import { LENGTH_UNITS } from './units/lengthUnits';
-import { PRESSURE_UNITS } from './units/pressureUnits';
-import { SPEED_UNITS } from './units/speedUnits';
-import { TEMPERATURE_UNITS } from './units/temperatureUnits';
-import { TIME_UNITS } from './units/timeUnits';
-import { VOLUME_UNITS } from './units/volumeUnits';
-import { WEIGHT_UNITS } from './units/weightUnits';
+import { AREA_UNITS } from './units/areaUnits.js';
+import { COOKING_UNITS } from './units/cookingUnits.js';
+import { CURRENCY_UNITS } from './units/currencyUnits.js';
+import { DATA_UNITS } from './units/dataUnits.js';
+import { ENERGY_UNITS } from './units/energyUnits.js';
+import { LENGTH_UNITS } from './units/lengthUnits.js';
+import { PRESSURE_UNITS } from './units/pressureUnits.js';
+import { SPEED_UNITS } from './units/speedUnits.js';
+import { TEMPERATURE_UNITS } from './units/temperatureUnits.js';
+import { TIME_UNITS } from './units/timeUnits.js';
+import { VOLUME_UNITS } from './units/volumeUnits.js';
+import { WEIGHT_UNITS } from './units/weightUnits.js';
 
 export const CONVERTERS = [
   {

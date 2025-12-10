@@ -1,13 +1,13 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import ErrorBoundary from "./components/common/ErrorBoundary";
-import Loading from "./components/common/Loading";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import NotFoundPage from "./pages/NotFoundPage";
+import ErrorBoundary from "./components/common/ErrorBoundary.jsx";
+import Loading from "./components/common/Loading.jsx";
+import Layout from "./components/Layout.jsx";
+import Home from "./pages/Home.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 // Lazy load the heaviest page
-const ConverterDetail = lazy(() => import("./pages/ConverterDetail"));
+const ConverterDetail = lazy(() => import("./pages/ConverterDetail.jsx"));
 
 export const router = createBrowserRouter([
   {

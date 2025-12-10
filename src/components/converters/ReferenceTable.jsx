@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { convertValue } from "../../utils/conversions/conversionEngine";
-import { formatResult } from "../../utils/formatting/decimalPrecision";
+import { convertValue } from "../../utils/conversions/conversionEngine.js";
+import { formatResult } from "../../utils/formatting/decimalPrecision.js";
 
 export default function ReferenceTable({
   value,
