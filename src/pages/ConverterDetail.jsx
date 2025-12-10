@@ -8,7 +8,7 @@ import ConverterUI from "../components/converters/ConverterUI.jsx";
 import RecentConversions from "../components/converters/RecentConversions.jsx";
 import ReferenceTable from "../components/converters/ReferenceTable.jsx"; // Import
 import { getConverterById } from "../data/converters.js";
-import  useCurrencyRates  from "../hooks/useCurrencyRates.js";
+import  {useCurrencyRates}  from "../hooks/useCurrencyRates.js";
 import { useRecentConversions } from "../hooks/useRecentConversions.js";
 
 export default function ConverterDetail() {
