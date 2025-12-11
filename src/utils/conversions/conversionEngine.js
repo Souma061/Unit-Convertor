@@ -1,4 +1,4 @@
-// -------- LINEAR CONVERSION (baseValue method) --------
+
 export function convertLinear(value, fromUnit, toUnit, UNITS) {
   const numValue = parseFloat(value);
 
@@ -17,7 +17,7 @@ export function convertLinear(value, fromUnit, toUnit, UNITS) {
   return baseValue / toData.baseValue;
 }
 
-// -------- TEMPERATURE CONVERSION (non-linear) --------
+
 export function convertTemperature(value, fromUnit, toUnit) {
   const numValue = parseFloat(value);
 
@@ -53,7 +53,7 @@ export function convertTemperature(value, fromUnit, toUnit) {
   }
 }
 
-// -------- CURRENCY CONVERSION (API-based rates) --------
+
 export function convertCurrency(value, fromCurrency, toCurrency, rates) {
   const numValue = parseFloat(value);
 
@@ -68,7 +68,7 @@ export function convertCurrency(value, fromCurrency, toCurrency, rates) {
   return baseAmount * rates[toCurrency];
 }
 
-// -------- MASTER CONVERSION HANDLER --------
+
 export function convertValue({
   value,
   fromUnit,

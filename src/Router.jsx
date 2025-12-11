@@ -6,8 +6,8 @@ import Layout from "./components/Layout.jsx";
 import Home from "./pages/Home.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
-// Lazy load the heaviest page
-const ConverterDetail = lazy(() => import("./pages/ConverterDetail.jsx"));
+// Lazy load the wrapper instead of the detail page directly
+const ConverterDetailWrapper = lazy(() => import("./pages/ConverterDetailWrapper.jsx"));
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
         <Layout />
       </ErrorBoundary>
     ),
-    errorElement: <NotFoundPage />, // Route-level error fallback
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         path: "converter/:id",
         element: (
           <Suspense fallback={<div className="p-8 flex justify-center"><Loading /></div>}>
-            <ConverterDetail />
+            <ConverterDetailWrapper />
           </Suspense>
         ),
       },

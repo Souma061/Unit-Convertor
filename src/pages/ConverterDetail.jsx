@@ -1,14 +1,14 @@
 
 import { useState } from "react";
-import { Helmet } from "react-helmet-async"; // Import Helmet
+import { Helmet } from "react-helmet-async";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "../components/common/NotFound.jsx";
 import ConverterUI from "../components/converters/ConverterUI.jsx";
 import RecentConversions from "../components/converters/RecentConversions.jsx";
-import ReferenceTable from "../components/converters/ReferenceTable.jsx"; // Import
+import ReferenceTable from "../components/converters/ReferenceTable.jsx";
 import { getConverterById } from "../data/converters.js";
-import  {useCurrencyRates}  from "../hooks/useCurrencyRates.js";
+import { useCurrencyRates } from "../hooks/useCurrencyRates.js";
 import { useRecentConversions } from "../hooks/useRecentConversions.js";
 
 export default function ConverterDetail() {
@@ -21,7 +21,7 @@ export default function ConverterDetail() {
   const { recents, addRecent, clearRecents } = useRecentConversions(id);
   const [restoreData, setRestoreData] = useState(null);
 
-  // Track state for Reference Table
+
   const [currentState, setCurrentState] = useState({ fromValue: "", fromUnit: "" });
 
   if (!converter) {
@@ -35,7 +35,7 @@ export default function ConverterDetail() {
         <meta name="description" content={converter.description} />
       </Helmet>
 
-      {/* Back Button */}
+
       <Link
         to="/"
         className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors group"
@@ -44,9 +44,9 @@ export default function ConverterDetail() {
         Back to Converters
       </Link>
 
-      {/* Split Layout: Hero Left, Converter Right on Desktop */}
+
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-start">
-        {/* Info Column */}
+
         <div className="md:col-span-5 space-y-6 md:sticky md:top-24">
           <div className="space-y-4">
             <span className="text-5xl md:text-6xl inline-block">{converter.icon}</span>
@@ -77,16 +77,17 @@ export default function ConverterDetail() {
           </div>
         </div>
 
-        {/* Converter Column */}
+
         <div className="md:col-span-7 w-full space-y-6">
           <ConverterUI
+            key={converter.id}
             converterData={converter}
             rates={finalRates.rates}
             ratesLoading={finalRates.loading}
             ratesError={finalRates.error}
             onConversionComplete={addRecent}
             restoreData={restoreData}
-            onStateChange={setCurrentState} // Pass handler
+            onStateChange={setCurrentState}
           />
 
           <RecentConversions
@@ -105,7 +106,7 @@ export default function ConverterDetail() {
         </div>
       </div>
 
-      {/* Available Units (Full Width Below) */}
+
       <div className="space-y-6 pt-8 border-t border-gray-200 dark:border-gray-800">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">Available Units</h2>
 

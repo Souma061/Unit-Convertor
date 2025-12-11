@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { MdInfoOutline, MdSwapVert } from "react-icons/md"; // Added Info Icon
+import { MdInfoOutline, MdSwapVert } from "react-icons/md";
 import { useConverter } from "../../hooks/useConverter.js";
-import { getFormula } from "../../utils/conversions/formulaGenerator.js"; // Import
+import { getFormula } from "../../utils/conversions/formulaGenerator.js";
 import Skeleton from "../common/Skeleton.jsx";
 import ConverterInput from "./ConverterInput.jsx";
 
@@ -12,7 +12,7 @@ export default function ConverterUI({
   ratesError = null,
   onConversionComplete = null,
   restoreData = null,
-  onStateChange = null, // New prop to report state up
+  onStateChange = null,
 }) {
   const {
     fromValue,
@@ -35,7 +35,7 @@ export default function ConverterUI({
     converterData.defaultToUnit
   );
 
-  // Restore previous conversion
+
   useEffect(() => {
     if (restoreData) {
       setFromUnit(restoreData.fromUnit);
@@ -45,7 +45,7 @@ export default function ConverterUI({
     }
   }, [restoreData, setFromUnit, setToUnit, setFromValue, setToValue]);
 
-  // Report state changes to parent (for Reference Table)
+
   useEffect(() => {
     if (onStateChange) {
       onStateChange({ fromValue, fromUnit });
@@ -72,7 +72,7 @@ export default function ConverterUI({
     handleSwapUnits();
   };
 
-  // Skeleton Loading State for initial load
+
   if (converterData.id === "currency" && ratesLoading && !rates) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto space-y-6">
@@ -86,12 +86,12 @@ export default function ConverterUI({
     );
   }
 
-  // Generate Formula
+
   const formula = getFormula(fromUnit, toUnit, converterData.id, converterData.units);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto">
-      {/* Show small loading indicator if re-fetching but we have stale data */}
+
       {ratesLoading && rates && (
         <div className="absolute top-2 right-2">
           <div className="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
@@ -110,10 +110,10 @@ export default function ConverterUI({
         </div>
       )}
 
-      {/* Main Converter Layout: Stacked on mobile, Side-by-side on tablet/desktop */}
+
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
 
-        {/* FROM Section */}
+
         <div className="flex-1 w-full space-y-1">
           <ConverterInput
             value={fromValue}
@@ -126,7 +126,6 @@ export default function ConverterUI({
           />
         </div>
 
-        {/* Swap Button (Centered) */}
         <div className="flex md:self-center shrink-0 pt-0 md:pt-6">
           <button
             onClick={handleSwap}
@@ -137,7 +136,7 @@ export default function ConverterUI({
           </button>
         </div>
 
-        {/* TO Section */}
+
         <div className="flex-1 w-full space-y-1">
           <ConverterInput
             value={toValue}
@@ -151,7 +150,7 @@ export default function ConverterUI({
         </div>
       </div>
 
-      {/* Formula Display - NEW */}
+
       {formula && (
         <div className="mt-4 flex items-start gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
           <MdInfoOutline className="text-blue-500 text-base shrink-0 mt-0.5" />
@@ -162,7 +161,7 @@ export default function ConverterUI({
         </div>
       )}
 
-      {/* Copy Result Button (Full width below) */}
+
       <button
         onClick={() => {
           if (!toValue) return;

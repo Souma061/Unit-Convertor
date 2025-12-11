@@ -1,25 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 const MAX_RECENTS = 5;
 
 export function useRecentConversions(converterId) {
-  const [recents, setRecents] = useState([]);
-
-  // Load from local storage
-  useEffect(() => {
+  // Lazy initialization to read from storage immediately
+  const [recents, setRecents] = useState(() => {
     try {
       const saved = localStorage.getItem(`recents_${converterId}`);
-      if (saved) {
-        setRecents(JSON.parse(saved));
-      } else {
-        setRecents([]);
-      }
+      return saved ? JSON.parse(saved) : [];
     } catch (e) {
       console.error("Failed to load recent conversions", e);
+      return [];
     }
-  }, [converterId]);
+  });
 
-  // Add a new conversion
+
   const addRecent = useCallback((conversion) => {
     setRecents((prev) => {
       // Avoid duplicates at the top of the list
@@ -38,7 +33,7 @@ export function useRecentConversions(converterId) {
 
       const newRecents = [newItem, ...prev].slice(0, MAX_RECENTS);
 
-      // Persist
+
       try {
         localStorage.setItem(`recents_${converterId}`, JSON.stringify(newRecents));
       } catch (e) {
@@ -49,7 +44,7 @@ export function useRecentConversions(converterId) {
     });
   }, [converterId]);
 
-  // Clear history
+
   const clearRecents = useCallback(() => {
     setRecents([]);
     localStorage.removeItem(`recents_${converterId}`);

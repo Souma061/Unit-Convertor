@@ -7,7 +7,7 @@ import { parseInputNumber } from "../utils/validation/inputValidator.js";
 export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
   const converter = getConverterById(converterId);
 
-  // Initialize from localStorage or use defaults
+
   const [fromUnit, setFromUnit] = useState(() => {
     const saved = localStorage.getItem(`converter_${converterId}_fromUnit`);
     return saved || defaultFromUnit;
@@ -26,20 +26,13 @@ export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
 
   const units = useMemo(() => converter?.units || [], [converter]);
 
-  // Save units to localStorage whenever they change
+
   useEffect(() => {
     localStorage.setItem(`converter_${converterId}_fromUnit`, fromUnit);
     localStorage.setItem(`converter_${converterId}_toUnit`, toUnit);
   }, [converterId, fromUnit, toUnit]);
 
-  useEffect(() => {
-    // Reset values when converter changes
-    setFromValue("");
-    setToValue("");
-    setError(null);
-    setPrecision(null);
-    setLastEdited(null);
-  }, [converterId]);
+
 
   const calculate = useCallback(
     (inputValue, inputUnit, outputUnit, rates) => {
