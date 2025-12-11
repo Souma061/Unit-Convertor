@@ -71,7 +71,7 @@ src/
 **Soumabrata Ghosh**
 
 - GitHub: [@Souma061](https://github.com/Souma061)
-- Portfolio: [souma061.github.io](https://soumabrata.me)
+- Portfolio: [soumabrata.me](https://soumabrata.me)
 
 ---
 
