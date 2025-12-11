@@ -1,16 +1,78 @@
-# React + Vite
+# Metriq - Modern Unit Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Metriq Banner](https://img.shields.io/badge/Metriq-Unit_Converter-blue?style=for-the-badge&logo=react)
 
-Currently, two official plugins are available:
+**Metriq** is a professional, high-performance unit conversion application built with modern web technologies. It offers a seamless user experience with real-time currency rates, instant search, and a beautiful responsive design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- **⚡ Comprehensive Conversion:** Support for 12+ categories including Length, Weight, Temperature, Area, Data, and Cooking.
+- **💱 Real-Time Currency:** Live exchange rates with smart caching using **TanStack Query** to minimize API calls.
+- **🔍 Instant Search:** Fuzzy search capability powered by **Fuse.js** to find converters instantly.
+- **🎨 Modern UI/UX:** Fully responsive design with **Tailwind CSS**, featuring smooth transitions and a premium feel.
+- **🌗 Dark Mode:** Built-in theme switching (Dark/Light) that persists user preference.
+- **📝 Formula Display:** Shows the actual mathematical formula used for each conversion.
+- **📚 Reference Tables:** Quick lookup tables for common values in every category.
+- **⏱️ Recent History:** Automatically saves your recent conversions for quick access.
+- **🏎️ Performance:** Optimized with lazy loading, memoization, and efficient re-rendering strategies.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Core:** [React 19](https://react.dev/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Routing:** [React Router v7](https://reactrouter.com/)
+- **State/Caching:** [TanStack Query](https://tanstack.com/query/latest)
+- **Search:** [Fuse.js](https://www.fusejs.io/)
+- **Icons:** [React Icons](https://react-icons.github.io/react-icons/)
+- **SEO:** [React Helmet Async](https://github.com/staylor/react-helmet-async)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Souma061/Unit-Convertor.git
+    cd unit-convertor
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+
+    ```bash
+    npm run dev
+    ```
+
+4.  **Build for production:**
+    ```bash
+    npm run build
+    ```
+
+## 📂 Project Structure
+
+```
+src/
+├── components/   # Reusable UI components (ConverterUI, etc.)
+├── context/      # Theme and Global Context providers
+├── data/         # Unit definitions and static data
+├── hooks/        # Custom React hooks (useConverter, useCurrencyRates)
+├── pages/        # Route pages (Home, ConverterDetail)
+├── utils/        # Helper functions and conversion engines
+└── ...
+```
+
+## 👨‍💻 Author
+
+**Soumabrata Ghosh**
+
+- GitHub: [@Souma061](https://github.com/Souma061)
+- Portfolio: [souma061.github.io](https://souma061.github.io/)
+
+---
+
+Made with ❤️ by Soumabrata Ghosh
