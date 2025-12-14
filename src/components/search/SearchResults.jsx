@@ -30,7 +30,7 @@ export default function SearchResults({ results, onSelectConverter, highlightInd
       role="listbox"
       className="absolute top-full left-0 right-0 mt-3
                  bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700
-                 rounded-2xl shadow-2xl max-h-[26rem] overflow-y-auto z-50
+                 rounded-2xl shadow-2xl max-h-104 overflow-y-auto z-50
                  animate-in fade-in slide-in-from-top-2 duration-200 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600"
     >
       <div className="p-2 space-y-1">
