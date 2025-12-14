@@ -16,7 +16,7 @@ export default function Home() {
         <title>Metriq - Precision Converter Suite</title>
         <meta name="description" content="Fast and accurate unit converter for length, weight, currency, and more." />
       </Helmet>
-      {/* Hero Section */}
+      { }
       <section className="space-y-6 md:space-y-8">
         <div className="space-y-3 md:space-y-4">
           <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
@@ -27,12 +27,12 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Search Bar */}
+        { }
         <div className="w-full max-w-2xl">
           <SearchBar query={query} onQueryChange={setQuery} />
         </div>
 
-        {/* Feature Pills */}
+        { }
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
           {["Smart Formulas", "History Tracking", "Live Rates", "Auto-precision"].map((feature) => (
             <div
@@ -44,9 +44,9 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Specialized Tools Link */}
+        { }
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-          <Link to="/science" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <Link to="/science" className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl">
             <div className="relative z-10">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 ⚛️ Physics & Engineering Mode
@@ -60,8 +60,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Results Section */}
-      {/* Results Section */}
+
       <section className="space-y-8 md:space-y-12 pb-12">
         {query ? (
           <div>
@@ -110,4 +109,4 @@ export default function Home() {
       </section>
     </div>
   );
-}
+};

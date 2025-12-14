@@ -42,3 +42,5 @@ export function parseLocaleNumber(str, locale = "en-US") {
   const result = Number(cleaned);
   return Number.isFinite(result) ? result : NaN;
 }
+
+

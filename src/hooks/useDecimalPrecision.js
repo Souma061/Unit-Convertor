@@ -4,17 +4,14 @@ import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecis
 export function useDecimalPrecision() {
   const [precision, setPrecision] = useState(null);
 
-  // Updates precision only for valid user input
   const handleInputChange = (value) => {
-    // Reset precision if input is empty
     if (value === "" || value === null || value === undefined) {
       setPrecision(null);
       return null;
     }
 
-    // Ignore intermediate states like "." or "12."
     if (value.endsWith(".") || value === "." || value === "-") {
-      return precision; // keep old precision
+      return precision;
     }
 
     const detected = detectPrecision(value);
@@ -22,7 +19,6 @@ export function useDecimalPrecision() {
     return detected;
   };
 
-  // Formats converted output based on input precision
   const formatOutput = (value, overridePrecision = null) => {
     if (value === "" || value === null || value === undefined) return "";
 

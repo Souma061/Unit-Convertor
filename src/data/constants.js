@@ -6,3 +6,5 @@ export const MAX_DECIMALS = 10;
 export const DEFAULT_DECIMALS = 2;
 export const FUSE_THRESHOLD = 0.4;
 export const MIN_SEARCH_CHARS = 2;
+
+

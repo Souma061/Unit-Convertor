@@ -107,3 +107,5 @@ export default function SearchBar({ query, onQueryChange }) {
     </div>
   );
 }
+
+

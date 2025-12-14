@@ -47,3 +47,5 @@ export async function fetchExchangeRates(baseCurrency = "USD") {
     throw error;
   }
 }
+
+

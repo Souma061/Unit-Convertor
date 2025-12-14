@@ -37,3 +37,5 @@ export function useSearch(query = "") {
     isNoMatch: normalizedQuery.length >= MIN_SEARCH_CHARS && searchResults.length === 0,
   };
 }
+
+

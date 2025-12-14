@@ -33,12 +33,12 @@ export default function ScienceMode() {
           className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors group"
         >
           <FiArrowLeft className="text-lg group-hover:-translate-x-1 transition-transform" />
-          Back
+          Back to Converters
         </Link>
         <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Science Tools</h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
         <EnergyMassConverter />
         <SigFigCalculator />
       </div>

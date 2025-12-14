@@ -32,10 +32,12 @@ export default function SplashScreen({ onFinish }) {
         Precision Converter
       </p>
 
-      {/* Loading Bar */}
+      {}
       <div className="w-48 h-1 bg-gray-100 dark:bg-gray-800 rounded-full mt-8 overflow-hidden">
         <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 w-1/2 animate-loading-bar rounded-full"></div>
       </div>
     </div>
   );
 }
+
+

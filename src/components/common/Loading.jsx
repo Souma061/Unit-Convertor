@@ -16,3 +16,5 @@ export default function Loading({ fullScreen = false }) {
 
   return content;
 }
+
+

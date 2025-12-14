@@ -5,3 +5,5 @@ export default function ConverterDetailWrapper() {
   const { id } = useParams();
   return <ConverterDetail key={id} />;
 }
+
+

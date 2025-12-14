@@ -44,3 +44,5 @@ export function getCurrencySymbol(code) {
 
   return symbolMap[code] || code;
 }
+
+

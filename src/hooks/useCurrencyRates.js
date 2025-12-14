@@ -12,10 +12,8 @@ export function useCurrencyRates() {
     queryKey: ["currency-rates"],
     queryFn: async () => {
       try {
-        // Try fresh API call
         const fresh = await fetchExchangeRates("USD");
 
-        // Normalize structure for consistency
         const normalized = {
           rates: fresh.rates,
           timestamp: fresh.timestamp,
@@ -28,7 +26,6 @@ export function useCurrencyRates() {
 
         return normalized;
       } catch (err) {
-        // Try valid cache (not expired)
         const cached = getCached(CURRENCY_CACHE_KEY, CACHE_DURATION);
         if (cached) {
           const normalized = {
@@ -43,7 +40,6 @@ export function useCurrencyRates() {
           return normalized;
         }
 
-        // Try ANY old cache (expired)
         const old = getOldCache(CURRENCY_CACHE_KEY);
         if (old) {
           const normalized = {
@@ -58,7 +54,6 @@ export function useCurrencyRates() {
           return normalized;
         }
 
-        // No fallback available → throw
         throw err;
       }
     },
@@ -66,7 +61,6 @@ export function useCurrencyRates() {
     retry: 1,
     retryDelay: 1000,
 
-    // React Query caching aligned with currency TTL
     staleTime: CACHE_DURATION,
     gcTime: CACHE_DURATION * 2,
   });

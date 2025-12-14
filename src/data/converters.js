@@ -16,8 +16,7 @@ import { VOLUME_UNITS } from './units/volumeUnits.js';
 import { WEIGHT_UNITS } from './units/weightUnits.js';
 
 export const CONVERTERS = [
-  // ... existing converters ...
-  // (Insert after Time or Data or at end, let's append)
+
 
   {
     id: 'angle',
@@ -249,3 +248,5 @@ export const CONVERTERS = [
 export function getConverterById(id) {
   return CONVERTERS.find(converter => converter.id === id);
 }
+
+

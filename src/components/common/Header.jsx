@@ -16,12 +16,12 @@ export default function Header() {
           aria-label="Go to Home"
           className="flex items-center gap-2 hover:opacity-80 active:scale-95 transition-transform"
         >
-          {/* Logo Icon */}
-          <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+          { }
+          <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
             <FiRefreshCw className="text-lg font-bold" />
           </div>
-          {/* Brand Name */}
-          <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
+          { }
+          <span className="text-xl sm:text-2xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
             Metriq
           </span>
         </Link>
@@ -38,7 +38,7 @@ export default function Header() {
             </span>
           </button>
 
-          {/* Mobile Icon Button for Precision */}
+          { }
           <button
             onClick={togglePrecision}
             className="sm:hidden p-2 rounded-xl bg-gray-100/50 hover:bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:hover:bg-gray-800 dark:text-gray-300 transition-all"
@@ -58,4 +58,4 @@ export default function Header() {
       </nav>
     </header>
   );
-}
+};

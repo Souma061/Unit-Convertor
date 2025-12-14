@@ -1,8 +1,6 @@
-
 export function convertLinear(value, fromUnit, toUnit, UNITS) {
   const numValue = parseFloat(value);
 
-  // Handle invalid value
   if (isNaN(numValue)) return "";
 
   const fromData = UNITS.find(u => u.symbol === fromUnit);
@@ -12,7 +10,6 @@ export function convertLinear(value, fromUnit, toUnit, UNITS) {
     throw new Error(`Invalid units: from=${fromUnit}, to=${toUnit}`);
   }
 
-  // Convert to base unit → convert to target unit
   const baseValue = numValue * fromData.baseValue;
   return baseValue / toData.baseValue;
 }
@@ -25,7 +22,6 @@ export function convertTemperature(value, fromUnit, toUnit) {
 
   let celsius;
 
-  // Normalize to Celsius
   switch (fromUnit) {
     case "°C":
       celsius = numValue;
@@ -40,7 +36,6 @@ export function convertTemperature(value, fromUnit, toUnit) {
       throw new Error(`Unsupported temperature unit: ${fromUnit}`);
   }
 
-  // Convert from Celsius → target
   switch (toUnit) {
     case "°C":
       return celsius;
@@ -63,13 +58,12 @@ export function convertCurrency(value, fromCurrency, toCurrency, rates) {
     throw new Error("Currency rates not available.");
   }
 
-  // Normalize to base currency (API default base)
   const baseAmount = numValue / rates[fromCurrency];
   return baseAmount * rates[toCurrency];
 }
 
 
-// ... existing imports ...
+
 
 export function convertBase(value, fromUnit, toUnit, units) {
   try {
@@ -80,12 +74,6 @@ export function convertBase(value, fromUnit, toUnit, units) {
 
     const fromBase = fromData.base;
     const toBase = toData.base;
-
-    // Check if ALL characters are valid for the base?
-    // parseInt parses "12" in binary as 1 (valid prefix).
-    // Usually we want to reject if invalid chars exist.
-    // For now, let's keep it simple: if parseInt works, use it.
-    // But parseInt("G", 16) -> NaN.
 
     const decimal = parseInt(value, fromBase);
 
@@ -100,7 +88,6 @@ export function convertBase(value, fromUnit, toUnit, units) {
 }
 
 function hexToRgb(hex) {
-  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, function (m, r, g, b) {
     return r + r + g + g + b + b;

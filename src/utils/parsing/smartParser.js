@@ -1,9 +1,4 @@
-/**
- * Parses text to extract a number and a potential unit.
- * @param {string} text - The clipboard text
- * @param {Array} availableUnits - List of unit objects with { symbol, name }
- * @returns {Object|null} - { value: number, unit: string|null } or null if no number found
- */
+
 export function smartParse(text, availableUnits = []) {
   if (!text || typeof text !== "string") return null;
 
@@ -48,3 +43,5 @@ export function smartParse(text, availableUnits = []) {
     unit: detectedUnit
   };
 }
+
+

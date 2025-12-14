@@ -15,3 +15,5 @@ export const CURRENCY_UNITS = [
   { symbol: 'BRL', name: 'Brazilian Real', aliases: ['brl', 'real'] },
   { symbol: 'ZAR', name: 'South African Rand', aliases: ['zar', 'rand'] },
 ];
+
+

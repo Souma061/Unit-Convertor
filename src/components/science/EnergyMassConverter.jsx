@@ -162,7 +162,7 @@ export default function EnergyMassConverter() {
       </h3>
 
       <div className="space-y-6">
-        {/* Mass Input */}
+        {}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Mass (m)
@@ -203,7 +203,7 @@ export default function EnergyMassConverter() {
           </div>
         </div>
 
-        {/* Energy Input */}
+        {}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Energy (E)
@@ -251,3 +251,5 @@ export default function EnergyMassConverter() {
     </div>
   );
 }
+
+

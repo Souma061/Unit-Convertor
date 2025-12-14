@@ -5,4 +5,6 @@ export const ELECTRON_MASS = 9.10938356e-31; // kg
 export const PROTON_MASS = 1.67262192e-27; // kg
 export const AVOGADRO_CONSTANT = 6.02214076e23; // mol⁻¹
 export const BOLTZMANN_CONSTANT = 1.380649e-23; // J⋅K⁻¹
-export const ELEMENTARY_CHARGE = 1.60217663e-19; // C
+export const ELEMENTARY_CHARGE = 1.60217663e-19; 
+
+

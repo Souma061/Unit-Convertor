@@ -1,4 +1,3 @@
-// Generate a human-readable formula string
 export function getFormula(fromUnit, toUnit, converterType, units) {
   if (fromUnit === toUnit) return `The value remains the same.`;
 
@@ -16,24 +15,16 @@ export function getFormula(fromUnit, toUnit, converterType, units) {
     return `Driven by real-time market exchange rates.`;
   }
 
-  // Linear conversions (Length, Weight, etc.)
   const fromData = units.find((u) => u.symbol === fromUnit);
   const toData = units.find((u) => u.symbol === toUnit);
 
   if (!fromData || !toData) return "";
 
-  // Calculate the factor between the two units
-  // baseValue is "how many base units are in this unit"
-  // e.g. 1 km has baseValue 1000 (meters)
-  // factor = fromBase / toBase
   const factor = fromData.baseValue / toData.baseValue;
 
-  // Format nicely
   if (factor >= 1) {
-    // Multiply
     return `Multiply the value by ${removeTrailingZeros(factor.toFixed(10))}`;
   } else {
-    // Divide
     const inverse = 1 / factor;
     return `Divide the value by ${removeTrailingZeros(inverse.toFixed(10))}`;
   }
