@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { MdInfoOutline, MdSwapVert } from "react-icons/md";
 import { useSettings } from "../../context/SettingsContext.jsx";
 import { useConverter } from "../../hooks/useConverter.js";
@@ -82,10 +82,51 @@ export default function ConverterUI({
     handleToUnitChange(unit, rates);
   };
 
-  const handleSwap = () => {
+  // useCallback ensures stability for useEffect dependencies
+  const handleSwap = useCallback(() => {
     handleSwapUnits();
-  };
+  }, [handleSwapUnits]);
 
+  const handleCopyResult = useCallback(() => {
+    if (!toValue) return;
+    navigator.clipboard.writeText(toValue);
+
+    if (onConversionComplete) {
+      onConversionComplete({
+        fromVal: fromValue,
+        fromUnit,
+        toVal: toValue,
+        toUnit
+      });
+    }
+
+    const btn = document.getElementById("copy-btn");
+    if (btn) {
+      const originalText = btn.innerText;
+      btn.innerText = "Copied!";
+      setTimeout(() => {
+        btn.innerText = originalText;
+      }, 2000);
+    }
+  }, [toValue, onConversionComplete, fromValue, fromUnit, toUnit]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Alt + S = Swap
+      if (e.altKey && e.code === "KeyS") {
+        e.preventDefault();
+        handleSwap();
+      }
+      // Alt + C = Copy
+      if (e.altKey && e.code === "KeyC") {
+        e.preventDefault();
+        handleCopyResult();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleSwap, handleCopyResult]); // Dependencies for the effect
 
   if (converterData.id === "currency" && ratesLoading && !rates) {
     return (
@@ -147,7 +188,7 @@ export default function ConverterUI({
           <button
             onClick={handleSwap}
             className="h-10 w-10 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full transition-all shadow-sm active:scale-95 border border-gray-200 dark:border-gray-500 cursor-pointer"
-            title="Swap units"
+            title="Swap units (Alt + S)"
           >
             <MdSwapVert className="text-xl" />
           </button>
@@ -181,30 +222,10 @@ export default function ConverterUI({
 
 
       <button
-        onClick={() => {
-          if (!toValue) return;
-          navigator.clipboard.writeText(toValue);
-
-          if (onConversionComplete) {
-            onConversionComplete({
-              fromVal: fromValue,
-              fromUnit,
-              toVal: toValue,
-              toUnit
-            });
-          }
-
-          const btn = document.getElementById("copy-btn");
-          if (btn) {
-            const originalText = btn.innerText;
-            btn.innerText = "Copied!";
-            setTimeout(() => {
-              btn.innerText = originalText;
-            }, 2000);
-          }
-        }}
+        onClick={handleCopyResult}
         id="copy-btn"
         disabled={!toValue}
+        title="Copy Result (Alt + C)"
         className="w-full mt-4 py-3 px-4 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer text-sm tracking-wide"
       >
         Copy Result

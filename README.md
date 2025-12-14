@@ -250,7 +250,7 @@ For support, feature requests, or bug reports:
 
 - GitHub: [@Souma061](https://github.com/Souma061)
 - Portfolio: [soumabrata.me](https://soumabrata.me)
-- LinkedIn: [Soumabrata Ghosh](https://linkedin.com/in/soumabrata-ghosh)
+- LinkedIn: [Soumabrata Ghosh](https://www.linkedin.com/in/soumabrata-ghosh-85862530b/)
 
 ---
 

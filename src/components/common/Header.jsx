@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { FiMoon, FiRefreshCw, FiSun } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSettings } from "../../context/SettingsContext.jsx";
@@ -7,6 +7,24 @@ import { useTheme } from "../../context/ThemeContext.jsx";
 export default function Header() {
   const { isDark, toggleTheme } = useTheme();
   const { precision, togglePrecision } = useSettings();
+
+  // Global Keyboard Shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Alt + T = Toggle Theme
+      if (e.altKey && e.code === "KeyT") {
+        e.preventDefault();
+        toggleTheme();
+      }
+      // Alt + P = Toggle Precision
+      if (e.altKey && e.code === "KeyP") {
+        e.preventDefault();
+        togglePrecision();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleTheme, togglePrecision]);
 
   return (
     <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/80 backdrop-blur-lg dark:border-gray-700 dark:bg-gray-900/80">
