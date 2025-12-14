@@ -1,10 +1,10 @@
 # Metriq - Modern Unit Converter
 
 ![Metriq Banner](https://img.shields.io/badge/Metriq-Unit_Converter-blue?style=for-the-badge&logo=react)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![Vite](https://img.shields.io/badge/Vite-Latest-646CFF?logo=vite)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?logo=tailwindcss)
-![License](https://img.shields.io/badge/License-MIT-green)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&style=for-the-badge)
+![Vite](https://img.shields.io/badge/Vite-5.0-9F7AEA?style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?logo=tailwindcss&style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 **Metriq** is a professional, high-performance unit conversion application built with modern web technologies. It offers a seamless user experience with real-time currency rates, instant search, and a beautiful responsive design that works flawlessly across all devices.
 
