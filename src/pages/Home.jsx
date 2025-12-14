@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import ConverterGrid from "../components/converters/ConverterGrid.jsx";
 import SearchBar from "../components/search/SearchBar.jsx";
 import { useSearch } from "../hooks/useSearch.js";
@@ -22,7 +23,7 @@ export default function Home() {
             Convert units with speed and precision
           </h1>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
-            Search instantly across 12+ professional converters including Data & Cooking. Experience live currency rates, smart formula explanations, automatic history tracking, and effortless precision workflows.
+            Access 16+ professional tools including new Science & Developer modes. Experience smart paste, live currency rates, deep formula insights, and automatic history tracking designed for students, engineers, and creators.
           </p>
         </div>
 
@@ -42,18 +43,70 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* Specialized Tools Link */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+          <Link to="/science" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl">
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                ⚛️ Physics & Engineering Mode
+              </h3>
+              <p className="mt-2 text-indigo-100 text-sm font-medium">
+                Access E=mc², Significant Figures Calculator, and Physical Constants.
+              </p>
+            </div>
+            <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors" />
+          </Link>
+        </div>
       </section>
 
       {/* Results Section */}
-      <section className="space-y-6 md:space-y-8">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-            {query ? `Search Results (${results.length})` : "All Converters"}
-          </h2>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1.5 md:mt-2">Click any converter to get started</p>
-        </div>
+      {/* Results Section */}
+      <section className="space-y-8 md:space-y-12 pb-12">
+        {query ? (
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              Search Results ({results.length})
+            </h2>
+            <ConverterGrid converters={results} />
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {[
+              {
+                title: "Essential Tools",
+                ids: ["length", "weight", "temperature", "time", "area", "speed", "volume"]
+              },
+              {
+                title: "Developer Suite",
+                ids: ["data", "number_base", "color", "screen"]
+              },
+              {
+                title: "Physics & Engineering",
+                ids: ["energy", "pressure", "angle"]
+              },
+              {
+                title: "Lifestyle",
+                ids: ["currency", "cooking"]
+              }
+            ].map((category) => {
+              const categoryConverters = results.filter(c => category.ids.includes(c.id));
+              if (categoryConverters.length === 0) return null;
 
-        <ConverterGrid converters={results} />
+              return (
+                <div key={category.title} className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {category.title}
+                    </h2>
+                    <div className="h-px flex-1 bg-gray-200 dark:bg-gray-800"></div>
+                  </div>
+                  <ConverterGrid converters={categoryConverters} />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

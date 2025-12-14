@@ -4,7 +4,7 @@ import { convertValue } from "../utils/conversions/index.js";
 import { detectPrecision, formatResult } from "../utils/formatting/decimalPrecision.js";
 import { parseInputNumber } from "../utils/validation/inputValidator.js";
 
-export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
+export function useConverter(converterId, defaultFromUnit, defaultToUnit, globalPrecision = null) {
   const converter = getConverterById(converterId);
 
 
@@ -36,8 +36,16 @@ export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
 
   const calculate = useCallback(
     (inputValue, inputUnit, outputUnit, rates) => {
-      const num = parseInputNumber(inputValue);
-      if (num === null) return "";
+      const isText = ["number_base", "color"].includes(converterId);
+      let num;
+
+      if (isText) {
+        num = inputValue;
+        if (!num) return "";
+      } else {
+        num = parseInputNumber(inputValue);
+        if (num === null) return "";
+      }
 
       try {
         setError(null);
@@ -53,13 +61,16 @@ export function useConverter(converterId, defaultFromUnit, defaultToUnit) {
 
         if (raw === "") return "";
 
-        return formatResult(raw, precision);
+        if (isText) return raw;
+
+        // Use global precision if set, otherwise fallback to auto-detected input precision
+        return formatResult(raw, globalPrecision !== null ? globalPrecision : null);
       } catch (err) {
         setError(err.message);
         return "";
       }
     },
-    [converterId, units, precision]
+    [converterId, units, globalPrecision]
   );
 
   const handleFromValueChange = useCallback(

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { MdInfoOutline, MdSwapVert } from "react-icons/md";
+import { useSettings } from "../../context/SettingsContext.jsx";
 import { useConverter } from "../../hooks/useConverter.js";
 import { getFormula } from "../../utils/conversions/formulaGenerator.js";
 import Skeleton from "../common/Skeleton.jsx";
@@ -14,6 +15,8 @@ export default function ConverterUI({
   restoreData = null,
   onStateChange = null,
 }) {
+  const { precision: globalPrecision } = useSettings();
+
   const {
     fromValue,
     toValue,
@@ -32,7 +35,8 @@ export default function ConverterUI({
   } = useConverter(
     converterData.id,
     converterData.defaultFromUnit,
-    converterData.defaultToUnit
+    converterData.defaultToUnit,
+    globalPrecision
   );
 
 
@@ -51,6 +55,16 @@ export default function ConverterUI({
       onStateChange({ fromValue, fromUnit });
     }
   }, [fromValue, fromUnit, onStateChange]);
+
+  // Re-run conversion when global precision changes
+  useEffect(() => {
+    if (fromValue) {
+      handleFromValueChange(fromValue, rates);
+    } else if (toValue) {
+      handleToValueChange(toValue, rates);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalPrecision]); // internal handle functions are stable enough or will be updated via hook re-render
 
   const handleFromChange = (value) => {
     handleFromValueChange(value, rates);
@@ -89,6 +103,8 @@ export default function ConverterUI({
 
   const formula = getFormula(fromUnit, toUnit, converterData.id, converterData.units);
 
+  const isTextConverter = ["number_base", "color"].includes(converterData.id);
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 p-4 shadow-xl max-w-3xl mx-auto">
 
@@ -123,6 +139,7 @@ export default function ConverterUI({
             units={converterData.units}
             label="From"
             isLoading={ratesLoading}
+            allowText={isTextConverter}
           />
         </div>
 
@@ -146,6 +163,7 @@ export default function ConverterUI({
             units={converterData.units}
             label="To"
             isLoading={ratesLoading}
+            allowText={isTextConverter}
           />
         </div>
       </div>

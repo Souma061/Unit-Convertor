@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router.jsx";
 import SplashScreen from "./components/common/SplashScreen.jsx";
+import { SettingsProvider } from "./context/SettingsContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const queryClient = new QueryClient({
@@ -21,13 +22,15 @@ export default function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        {loading ? (
-          <SplashScreen onFinish={() => setLoading(false)} />
-        ) : (
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-          </QueryClientProvider>
-        )}
+        <SettingsProvider>
+          {loading ? (
+            <SplashScreen onFinish={() => setLoading(false)} />
+          ) : (
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router} />
+            </QueryClientProvider>
+          )}
+        </SettingsProvider>
       </ThemeProvider>
     </HelmetProvider>
   );

@@ -39,6 +39,11 @@ export function formatResult(value, precision = null) {
   // Handle zero
   if (Math.abs(num) === 0) return "0";
 
+  // If precision is explicitly set, use it
+  if (precision !== null && precision !== undefined) {
+    return num.toFixed(precision);
+  }
+
   // For very small numbers (e.g. 0.000007), we need high precision to avoid "0"
   // If the number is < 0.0001, we use up to 10 decimal places
   if (Math.abs(num) < 0.0001) {

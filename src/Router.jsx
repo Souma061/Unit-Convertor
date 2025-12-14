@@ -9,6 +9,8 @@ import NotFoundPage from "./pages/NotFoundPage.jsx";
 // Lazy load the wrapper instead of the detail page directly
 const ConverterDetailWrapper = lazy(() => import("./pages/ConverterDetailWrapper.jsx"));
 
+const ScienceMode = lazy(() => import("./pages/ScienceMode.jsx"));
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -31,7 +33,14 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
-
+      {
+        path: "science",
+        element: (
+          <Suspense fallback={<div className="p-8 flex justify-center"><Loading /></div>}>
+            <ScienceMode />
+          </Suspense>
+        ),
+      },
     ],
   },
 

@@ -1,10 +1,14 @@
+import { ANGLE_UNITS } from './units/angleUnits.js';
 import { AREA_UNITS } from './units/areaUnits.js';
+import { COLOR_UNITS } from './units/colorUnits.js';
 import { COOKING_UNITS } from './units/cookingUnits.js';
 import { CURRENCY_UNITS } from './units/currencyUnits.js';
 import { DATA_UNITS } from './units/dataUnits.js';
 import { ENERGY_UNITS } from './units/energyUnits.js';
 import { LENGTH_UNITS } from './units/lengthUnits.js';
+import { NUMBER_BASE_UNITS } from './units/numberBaseUnits.js';
 import { PRESSURE_UNITS } from './units/pressureunits.js';
+import { SCREEN_UNITS } from './units/screenUnits.js';
 import { SPEED_UNITS } from './units/speedunits.js';
 import { TEMPERATURE_UNITS } from './units/temperatureUnits.js';
 import { TIME_UNITS } from './units/timeUnits.js';
@@ -12,8 +16,69 @@ import { VOLUME_UNITS } from './units/volumeUnits.js';
 import { WEIGHT_UNITS } from './units/weightUnits.js';
 
 export const CONVERTERS = [
+  // ... existing converters ...
+  // (Insert after Time or Data or at end, let's append)
+
+  {
+    id: 'angle',
+    name: 'Angle',
+    description: 'Convert between degrees, radians, and gradians.',
+    icon: '📐',
+    category: 'Geometry',
+    defaultFromUnit: 'deg',
+    defaultToUnit: 'rad',
+    units: ANGLE_UNITS,
+    searchableUnits: ANGLE_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
+  {
+    id: 'number_base',
+    name: 'Number Base',
+    description: 'Convert between binary, octal, decimal, and hexadecimal.',
+    icon: '👨‍💻',
+    category: 'Developer',
+    defaultFromUnit: 'dec',
+    defaultToUnit: 'bin',
+    units: NUMBER_BASE_UNITS,
+    searchableUnits: NUMBER_BASE_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
+  {
+    id: 'color',
+    name: 'Color',
+    description: 'Convert between HEX, RGB, and HSL color formats.',
+    icon: '🎨',
+    category: 'Developer',
+    defaultFromUnit: 'hex',
+    defaultToUnit: 'rgb',
+    units: COLOR_UNITS,
+    searchableUnits: COLOR_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
+  {
+    id: 'screen',
+    name: 'Screen',
+    description: 'Convert between pixels and REM units.',
+    icon: '🖥️',
+    category: 'Developer',
+    defaultFromUnit: 'px',
+    defaultToUnit: 'rem',
+    units: SCREEN_UNITS,
+    searchableUnits: SCREEN_UNITS.flatMap(unit => [
+      unit.symbol, unit.name, ...unit.aliases
+    ]),
+  },
+
   {
     id: 'length',
+    // ...
+
     name: 'Length',
     description: 'Convert between different units of length.',
     icon: '📏',

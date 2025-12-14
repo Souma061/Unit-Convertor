@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
@@ -23,6 +23,19 @@ export default function ConverterDetail() {
 
 
   const [currentState, setCurrentState] = useState({ fromValue: "", fromUnit: "" });
+  const [copiedUnit, setCopiedUnit] = useState(null);
+
+  useEffect(() => {
+    if (copiedUnit) {
+      const timer = setTimeout(() => setCopiedUnit(null), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copiedUnit]);
+
+  const handleCopyUnit = (symbol) => {
+    navigator.clipboard.writeText(symbol);
+    setCopiedUnit(symbol);
+  };
 
   if (!converter) {
     return <NotFound message={`Converter "${id}" not found`} />;
@@ -110,19 +123,31 @@ export default function ConverterDetail() {
       <div className="space-y-6 pt-8 border-t border-gray-200 dark:border-gray-800">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">Available Units</h2>
 
-        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {converter.units.map((unit) => (
-            <button
+            <div
               key={unit.symbol}
-              onClick={() => navigator.clipboard?.writeText(unit.symbol)}
-              className="group bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-700 rounded-lg p-2 sm:p-3 text-left transition cursor-pointer"
+              onClick={() => handleCopyUnit(unit.symbol)}
+              className="group relative p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-gray-800 cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all active:scale-[0.98]"
             >
-              <div className="font-bold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-1 text-sm sm:text-base">
-                {unit.symbol}
-                <span className="text-[9px] sm:text-[10px] text-gray-600 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition">copy</span>
+              <div className="flex justify-between items-start">
+                <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+                  {unit.name}
+                </div>
+                {copiedUnit === unit.symbol ? (
+                  <span className="text-[10px] font-bold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 rounded-full fade-in">
+                    Copied!
+                  </span>
+                ) : (
+                  <span className="opacity-0 group-hover:opacity-100 text-[10px] text-blue-600 dark:text-blue-400 font-medium transition-opacity">
+                    Click to copy
+                  </span>
+                )}
               </div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 truncate">{unit.name}</div>
-            </button>
+              <div className="font-mono font-medium text-gray-900 dark:text-gray-200 break-all text-lg">
+                {unit.symbol}
+              </div>
+            </div>
           ))}
         </div>
       </div>

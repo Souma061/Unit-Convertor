@@ -1,4 +1,6 @@
 import { useId } from "react";
+import { MdContentPaste } from "react-icons/md";
+import { smartParse } from "../../utils/parsing/smartParser.js";
 
 export default function ConverterInput({
   value,
@@ -9,15 +11,53 @@ export default function ConverterInput({
   label,
   isLoading = false,
   error = null,
+  allowText = false,
 }) {
   const id = useId();
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
+    if (allowText) {
+      onValueChange(inputValue);
+      return;
+    }
+
     // Allow: empty, -, digit, ., decimal numbers
     if (inputValue === "" || /^-?\d*\.?\d*$/.test(inputValue)) {
       onValueChange(inputValue);
+    }
+  };
+
+  const processPaste = (text) => {
+    const result = smartParse(text, units);
+
+    if (result) {
+      onValueChange(result.value);
+      if (result.unit && result.unit !== unit) {
+        onUnitChange(result.unit);
+      }
+    } else {
+      if (allowText) {
+        onValueChange(text);
+      } else if (/^-?\d*\.?\d*$/.test(text)) {
+        onValueChange(text);
+      }
+    }
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text");
+    processPaste(text);
+  };
+
+  const handlePasteButton = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      processPaste(text);
+    } catch (err) {
+      console.error("Failed to read clipboard", err);
     }
   };
 
@@ -36,9 +76,10 @@ export default function ConverterInput({
         <input
           id={id}
           type="text"
-          inputMode="decimal"
+          inputMode={allowText ? "text" : "decimal"}
           value={value}
           onChange={handleInputChange}
+          onPaste={handlePaste}
           onFocus={(e) => e.target.select()}
           placeholder="Enter value"
           disabled={isLoading}
@@ -48,6 +89,16 @@ export default function ConverterInput({
                      disabled:opacity-50 disabled:cursor-not-allowed shadow-sm
                      placeholder:text-gray-500 dark:placeholder:text-gray-400"
         />
+
+        <div className="flex gap-2">
+          <button
+            onClick={handlePasteButton}
+            title="Smart Paste"
+            className="p-2.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors cursor-pointer shrink-0"
+          >
+            <MdContentPaste />
+          </button>
+        </div>
 
         <div className="shrink-0 w-24 xs:w-28 sm:w-32">
           <select

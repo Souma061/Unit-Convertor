@@ -1,4 +1,6 @@
+
 import { useMemo } from "react";
+import { useSettings } from "../../context/SettingsContext.jsx";
 import { convertValue } from "../../utils/conversions/conversionEngine.js";
 import { formatResult } from "../../utils/formatting/decimalPrecision.js";
 
@@ -9,6 +11,8 @@ export default function ReferenceTable({
   converterId,
   rates = null,
 }) {
+  const { precision } = useSettings();
+
   // Memoize the list of conversions to avoid recalculating on every render
   const conversions = useMemo(() => {
     if (!value || isNaN(value)) return [];
@@ -27,10 +31,10 @@ export default function ReferenceTable({
 
         return {
           unit,
-          value: formatResult(result, null)
+          value: formatResult(result, precision)
         };
       });
-  }, [value, fromUnit, units, converterId, rates]);
+  }, [value, fromUnit, units, converterId, rates, precision]);
 
   if (!value || conversions.length === 0) return null;
 
