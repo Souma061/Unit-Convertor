@@ -242,11 +242,21 @@ export const CONVERTERS = [
     searchableUnits: CURRENCY_UNITS.flatMap(unit => [
       unit.symbol, unit.name, ...unit.aliases
     ]),
+  },
+
+  {
+    id: 'science',
+    name: 'Science Tools',
+    description: 'Advanced physics & engineering calculations (E=mc², Sig Figs).',
+    icon: '⚛️',
+    category: 'Physics',
+    defaultFromUnit: '',
+    defaultToUnit: '',
+    units: [],
+    searchableUnits: ['physics', 'science', 'E=mc2', 'sig figs', 'constants', 'mass', 'energy'],
   }
 ];
 
 export function getConverterById(id) {
   return CONVERTERS.find(converter => converter.id === id);
 }
-
-

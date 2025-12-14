@@ -7,6 +7,7 @@ import SearchResults from "./SearchResults.jsx";
 export default function SearchBar({ query, onQueryChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
 
   const { results } = useSearch(query);
   const navigate = useNavigate();
@@ -24,6 +25,18 @@ export default function SearchBar({ query, onQueryChange }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Ctrl+K to focus
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleGlobalKeyDown);
+    return () => document.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
+
   const handleSearch = (e) => {
     onQueryChange(e.target.value);
     setHighlightIndex(0);
@@ -33,7 +46,11 @@ export default function SearchBar({ query, onQueryChange }) {
   const handleSelectConverter = (converterId) => {
     onQueryChange("");
     setIsOpen(false);
-    navigate(`/converter/${converterId}`);
+    if (converterId === 'science') {
+      navigate('/science');
+    } else {
+      navigate(`/converter/${converterId}`);
+    }
   };
 
   const handleClear = () => {
@@ -70,9 +87,9 @@ export default function SearchBar({ query, onQueryChange }) {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      <div className="relative">
-        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xl" />
+    <div ref={containerRef} className="relative w-full z-30">
+      <div className={`relative group transition-all duration-300 ${isFocused ? 'scale-[1.02]' : ''}`}>
+        <FiSearch className={`absolute left-5 top-1/2 -translate-y-1/2 text-xl transition-colors duration-300 ${isFocused ? 'text-blue-500' : 'text-gray-400 dark:text-gray-500'}`} />
 
         <input
           ref={inputRef}
@@ -80,24 +97,33 @@ export default function SearchBar({ query, onQueryChange }) {
           value={query}
           onChange={handleSearch}
           onKeyDown={handleKeyDown}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => { setIsOpen(true); setIsFocused(true); }}
+          onBlur={() => setIsFocused(false)}
           placeholder="Search converters or units..."
-          className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg pl-12 pr-12 py-3
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                     shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500"
+          className={`w-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl pl-14 pr-14 py-4
+                     focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50
+                     shadow-sm hover:shadow-md focus:shadow-xl dark:focus:shadow-blue-900/10
+                     placeholder:text-gray-400 dark:placeholder:text-gray-500
+                     transition-all duration-300 text-base md:text-lg tracking-wide`}
         />
 
-        {query && (
+        {query ? (
           <button
             onClick={handleClear}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400 transition cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-500 transition-all cursor-pointer"
           >
             <FiX className="text-xl" />
           </button>
+        ) : (
+          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:flex items-center gap-1">
+            <kbd className="hidden sm:inline-flex items-center h-6 px-2 text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-sm">
+              <span className="text-xs mr-1">⌘</span>K
+            </kbd>
+          </div>
         )}
       </div>
 
-      {isOpen && query.length > 0 && results.length > 0 && (
+      {isOpen && query.length > 0 && (
         <SearchResults
           results={results}
           onSelectConverter={handleSelectConverter}
@@ -107,5 +133,3 @@ export default function SearchBar({ query, onQueryChange }) {
     </div>
   );
 }
-
-
