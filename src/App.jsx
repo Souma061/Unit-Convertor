@@ -3,6 +3,7 @@ import { useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router.jsx";
+import CanvasCursor from "./components/CanvasCursor.jsx";
 import SplashScreen from "./components/common/SplashScreen.jsx";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
@@ -27,6 +28,7 @@ export default function App() {
             <SplashScreen onFinish={() => setLoading(false)} />
           ) : (
             <QueryClientProvider client={queryClient}>
+              <CanvasCursor />
               <RouterProvider router={router} />
             </QueryClientProvider>
           )}
@@ -35,5 +37,3 @@ export default function App() {
     </HelmetProvider>
   );
 }
-
-
