@@ -13,16 +13,18 @@ export default function Layout() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-500 ease-in-out bg-linear-to-br from-slate-100 via-white to-slate-200 dark:from-slate-900 dark:via-gray-900 dark:to-slate-900">
-      <Snowfall color="rgba(59, 130, 246, 0.5)" snowflakeCount={50} speed={[0.5, 2]} wind={[-2, 2]} radius={[1, 3]} />
+    <>
+      <Snowfall color="rgba(59, 130, 246, 0.5)" snowflakeCount={150} speed={[2, 5]} wind={[-2, 2]} radius={[1, 3]} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 10 }} />
 
-      <Header />
+      <div className="min-h-screen flex flex-col transition-colors duration-500 ease-in-out bg-linear-to-br from-slate-100 via-white to-slate-200 dark:from-slate-900 dark:via-gray-900 dark:to-slate-900">
+        <Header />
 
-      <main className="flex-1 w-full mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 max-w-6xl">
-        <Outlet />
-      </main>
+        <main className="flex-1 w-full mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 max-w-6xl">
+          <Outlet />
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 }
