@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 
 const useCanvasCursor = () => {
   useEffect(() => {
+    // Disable on touch devices (mobile/tablet) where no mouse cursor is available
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
     let ctx,
       pos = {},
       lines = [],
